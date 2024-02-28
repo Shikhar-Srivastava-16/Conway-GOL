@@ -4,15 +4,34 @@ public class Cell {
 
     // attributes
     /**
-     * for mode = true, cell is live
-     * for mode = false, cell is dead
+     * for live = true, cell is live
+     * for live = false, cell is dead
+     * 
+     * at the end of the turn, if shouldLive = false, set live to false and set
+     * shouldLive to true
      */
     private boolean live;
+    private boolean shouldLive;
+
+    // setters
+    public void setLive(boolean live) {
+        this.live = live;
+    }
+
+    public void setShouldLive(boolean shouldLive) {
+        this.shouldLive = shouldLive;
+    }
+
+    // getters
+    public boolean isShouldLive() {
+        return shouldLive;
+    }
 
     public boolean isLive() {
         return live;
     }
 
+    // contructor
     public Cell(boolean mode) {
         this.live = mode;
     }
@@ -34,7 +53,20 @@ public class Cell {
         }
 
         if (liveCells < x || liveCells == z || liveCells > y) {
-            live = false;
+            shouldLive = false;
+        }
+    }
+
+    public static void changeEndTurn(Cell[][] map) {
+        for (Cell[] cells : map) {
+            for (Cell cell : cells) {
+                if (!cell.isShouldLive()) {
+                    cell.setLive(false);
+                    cell.setShouldLive(true);
+                } else {
+                    cell.setLive(true);
+                }
+            }
         }
     }
 }
