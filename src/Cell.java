@@ -33,6 +33,10 @@ public class Cell extends JButton {
         return live;
     }
 
+    public Cell() {
+        this.live = false;
+    }
+
     // contructor
     public Cell(boolean mode) {
         this.live = mode;
