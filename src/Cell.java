@@ -1,10 +1,11 @@
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 
-public class Cell extends JButton implements ActionListener {
+public class Cell extends JButton {
 
     // attributes
     /**
@@ -37,11 +38,19 @@ public class Cell extends JButton implements ActionListener {
 
     public Cell() {
         this.live = false;
+        this.setBackground(Color.black);
         this.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                .setLive(true);
+                if (isLive()) {
+                    setLive(false);
+                    setBackground(Color.black);
+                } else {
+                    setLive(true);
+                    setBackground(Color.yellow);
+                }
+
             }
 
         });
