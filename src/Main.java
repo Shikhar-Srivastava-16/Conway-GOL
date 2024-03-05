@@ -1,3 +1,4 @@
+import java.awt.Dimension;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,6 +19,7 @@ public class Main {
             }
         }
 
+        gameFrame.mainGrid.setPreferredSize(new Dimension(300, 300));
         gameFrame.mainGrid.setVisible(true);
         gameFrame.setVisible(true);
     }

@@ -26,15 +26,15 @@ public class Frame extends JFrame {
 
         setTitle("Game of Life");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1100, 1100);
+        setSize(1920, 1080);
         setLocationRelativeTo(null);
         setBackground(Color.BLACK);
 
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         getContentPane().add(mainPanel);
 
-        mainGrid.setLayout(new FlowLayout());
-        mainGrid.setPreferredSize(new Dimension(1000, 1000));
+        mainGrid.setLayout(new GridLayout(50, 50, 0, 0));
+        // mainGrid.setPreferredSize(new Dimension(300, 300));
         mainGrid.setBackground(Color.BLUE);
         mainPanel.add(mainGrid);
 

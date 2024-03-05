@@ -35,7 +35,6 @@ public class Cell extends JButton {
 
     public Cell() {
         this.live = false;
-        this.setSize(1, 1);
     }
 
     // contructor
