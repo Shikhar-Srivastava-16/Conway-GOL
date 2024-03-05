@@ -19,7 +19,7 @@ public class Main {
             }
         }
 
-        gameFrame.mainGrid.setPreferredSize(new Dimension(300, 300));
+        gameFrame.mainGrid.setPreferredSize(new Dimension(1000, 1000));
         gameFrame.mainGrid.setVisible(true);
         gameFrame.setVisible(true);
     }

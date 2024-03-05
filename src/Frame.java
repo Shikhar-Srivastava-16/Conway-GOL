@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Frame extends JFrame {
-    JPanel mainPanel = new JPanel();
     JPanel mainGrid = new JPanel();
     JPanel buttonPanel = new JPanel();
     JButton save = new JButton("Save");
@@ -24,27 +23,24 @@ public class Frame extends JFrame {
 
     public Frame() {
 
+        this.setLayout(null);
         setTitle("Game of Life");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1920, 1080);
-        setLocationRelativeTo(null);
+        setSize(1080, 1080);
         setBackground(Color.BLACK);
 
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        getContentPane().add(mainPanel);
-
         mainGrid.setLayout(new GridLayout(50, 50, 0, 0));
-        // mainGrid.setPreferredSize(new Dimension(300, 300));
+        mainGrid.setBounds(10, 10, 500, 500);
         mainGrid.setBackground(Color.BLUE);
-        mainPanel.add(mainGrid);
+        this.add(mainGrid);
 
-        buttonPanel.setPreferredSize(new Dimension(1000, 150));
+        buttonPanel.setBounds(10, 1070, 10, 10);
         buttonPanel.setBackground(Color.MAGENTA);
-        mainPanel.add(buttonPanel);
-
         buttonPanel.add(save);
         buttonPanel.add(saveLabel);
         buttonPanel.add(reload);
+        this.add(buttonPanel);
+        buttonPanel.setVisible(true);
 
         save.addActionListener(new ActionListener() {
 
