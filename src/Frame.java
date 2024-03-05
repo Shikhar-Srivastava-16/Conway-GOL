@@ -29,6 +29,7 @@ public class Frame extends JFrame {
         JPanel mainGrid = new JPanel();
         mainGrid.setPreferredSize(new Dimension(1000, 600));
         mainGrid.setBackground(Color.BLUE);
+
         mainPanel.add(mainGrid);
 
         JPanel buttonPanel = new JPanel();
@@ -73,6 +74,9 @@ public class Frame extends JFrame {
 
     public static void main(String[] args) {
         Frame gameFrame = new Frame();
+        Cell[][] grid = new Cell[50][50];
+        
+
     }
 
 }
