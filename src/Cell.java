@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 
-public class Cell {
+import javax.swing.JButton;
+
+public class Cell extends JButton {
 
     // attributes
     /**
