@@ -29,21 +29,13 @@ public class Main {
     }
 
     /**
+     * @throws IOException
      * 
      */
-    public static void loadSave() {
-        /*
-         * FileWriter writerObj = new FileWriter(saveFile);
-         * for (Cell[] row : arrCells) {
-         * for (Cell cell : row) {
-         * // for live cell
-         * if (cell.isLive())
-         * writerObj.write("o");
-         * else
-         * writerObj.write(".");
-         * // System.out.println(); for logs
-         * }
-         * }
-         */
+    public static void loadSave(File saveFile) throws IOException {
+        FileWriter writerObj = new FileWriter(saveFile);
     }
+
+    @Override
+    p
 }
