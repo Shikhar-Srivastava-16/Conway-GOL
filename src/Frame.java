@@ -1,5 +1,7 @@
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -13,33 +15,32 @@ import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Frame extends JFrame {
+    JPanel mainPanel = new JPanel();
+    JPanel mainGrid = new JPanel();
+    JPanel buttonPanel = new JPanel();
+    JButton save = new JButton("Save");
+    final JLabel saveLabel = new JLabel();
+    JButton reload = new JButton("Reload");
 
     public Frame() {
 
         setTitle("Game of Life");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1100, 750);
+        setSize(1100, 1100);
         setLocationRelativeTo(null);
         setBackground(Color.BLACK);
 
-        JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         getContentPane().add(mainPanel);
 
-        JPanel mainGrid = new JPanel();
-        mainGrid.setPreferredSize(new Dimension(1000, 600));
+        mainGrid.setLayout(new FlowLayout());
+        mainGrid.setPreferredSize(new Dimension(1000, 1000));
         mainGrid.setBackground(Color.BLUE);
-
         mainPanel.add(mainGrid);
 
-        JPanel buttonPanel = new JPanel();
         buttonPanel.setPreferredSize(new Dimension(1000, 150));
         buttonPanel.setBackground(Color.MAGENTA);
         mainPanel.add(buttonPanel);
-
-        JButton save = new JButton("Save");
-        final JLabel saveLabel = new JLabel();
-        JButton reload = new JButton("Reload");
 
         buttonPanel.add(save);
         buttonPanel.add(saveLabel);
@@ -70,13 +71,6 @@ public class Frame extends JFrame {
         });
 
         setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        Frame gameFrame = new Frame();
-        Cell[][] grid = new Cell[50][50];
-        
-
     }
 
 }

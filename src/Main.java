@@ -2,11 +2,24 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import javax.swing.JButton;
+
 public class Main {
 
     private static Cell[][] arrCells = new Cell[50][50];
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
+        Frame gameFrame = new Frame();
+
+        for (Cell[] row : arrCells) {
+            for (Cell cell : row) {
+                cell = new Cell();
+                gameFrame.mainGrid.add(cell);
+            }
+        }
+
+        gameFrame.mainGrid.setVisible(true);
+        gameFrame.setVisible(true);
     }
 
     /**
