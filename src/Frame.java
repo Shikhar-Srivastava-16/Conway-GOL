@@ -30,11 +30,11 @@ public class Frame extends JFrame {
         setBackground(Color.BLACK);
 
         mainGrid.setLayout(new GridLayout(50, 50, 0, 0));
-        mainGrid.setBounds(10, 10, 500, 500);
+        mainGrid.setBounds(10, 10, 700, 700);
         mainGrid.setBackground(Color.BLUE);
         this.add(mainGrid);
 
-        buttonPanel.setBounds(10, 1070, 10, 10);
+        buttonPanel.setBounds(10, 750, 1000, 30);
         buttonPanel.setBackground(Color.MAGENTA);
         buttonPanel.add(save);
         buttonPanel.add(saveLabel);
