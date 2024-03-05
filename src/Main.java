@@ -1,5 +1,6 @@
 public class Main {
 
+    private static Cell[][] arrCells;
     public static void main(String[] args) {
 
     }
@@ -8,6 +9,8 @@ public class Main {
      * 
      */
     public static void saveGame() {
+        for (Cell[] row : arrCells) {
+        }
     }
 
     /**
