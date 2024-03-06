@@ -7,11 +7,14 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.UIManager;
 
 public class Main {
     private static boolean runningState = false;
     private static Cell[][] arrCells = new Cell[50][50];
+    private static File saveFile = new File("save.gol");
+    private static int gridSize;
 
     public static void main(String[] args) {
         try {
@@ -20,7 +23,8 @@ public class Main {
             e.printStackTrace();
         }
 
-        Frame gameFrame = new Frame();
+        gridSize = 50;
+        Frame gameFrame = new Frame(gridSize);
 
         for (int i = 0; i < arrCells.length; i++) {
             for (int j = 0; j < arrCells[i].length; j++) {
@@ -32,20 +36,42 @@ public class Main {
         gameFrame.mainGrid.setVisible(true);
         gameFrame.setVisible(true);
 
-        gameFrame.stepButton.addActionListener(new ActionListener() {
+        gameFrame.mainGrid.setVisible(true);
+        gameFrame.setVisible(true);
+
+        addActions(gameFrame.stepButton, gameFrame.runButton, gameFrame.save);
+    }
+
+    public static void addActions(JButton stepButton, JButton runButton, JButton saveButton) {
+        stepButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 step(2, 3, 3);
             }
         });
 
-        gameFrame.runButton.addActionListener(new ActionListener() {
+        saveButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    saveGame(saveFile);
+                } catch (Exception a) {
+                    System.out.println("Main.addActions(...).new ActionListener() {...}.actionPerformed()");
+                }
+            }
+
+        });
+
+        runButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (runningState == false) {
                     runningState = true;
+                    runButton.setText("Stop");
                 } else {
                     runningState = false;
+                    runButton.setText("Run");
                 }
 
                 // ExecutorService executorService = Executors.newFixedThreadPool(5);
@@ -65,10 +91,6 @@ public class Main {
 
             }
         });
-
-        gameFrame.mainGrid.setVisible(true);
-        gameFrame.setVisible(true);
-
     }
 
     public static ArrayList<Cell> getAdjacentCells(int x, int y) {
@@ -91,6 +113,7 @@ public class Main {
         if (up < 0) {
             up = up + arrCells.length;
         }
+
         adjacentCells.add(arrCells[left][up]);
         adjacentCells.add(arrCells[x][up]);
         adjacentCells.add(arrCells[right][up]);
@@ -102,33 +125,11 @@ public class Main {
 
         return adjacentCells;
     }
-
     public static void step(int x, int y, int z) {
+
         for (int i = 0; i < arrCells.length; i++) {
-            for (int j = 0; j < arrCells[i].length; j++) {
-                int livingNeighbours = 0;
-                ArrayList<Cell> neighbourCells = getAdjacentCells(i, j);
-                for (Cell neighbour : neighbourCells) {
-                    if (neighbour.isLive()) {
-                        livingNeighbours++;
-                    }
-                }
-
-                if (arrCells[i][j].isLive()) {
-                    if (livingNeighbours < x || livingNeighbours > y) {
-                        arrCells[i][j].setShouldLive(false);
-                    } else {
-                        arrCells[i][j].setShouldLive(true);
-                    }
-                } else {
-                    if (livingNeighbours == z) {
-                        arrCells[i][j].setShouldLive(true);
-                    } else {
-                        arrCells[i][j].setShouldLive(false);
-                    }
-
-                }
-            }
+            for (int j = 0; j < arrCells[i].length; j++)
+                arrCells[i][j].changeCell(getAdjacentCells(i, j), x, y, z);
         }
         Cell.changeEndTurn(arrCells);
     }
@@ -152,20 +153,24 @@ public class Main {
     /**
      * @throws IOException
      * 
-     * 
      */
     public static void saveGame(File saveFile) throws IOException {
         FileWriter writerObj = new FileWriter(saveFile);
         for (Cell[] row : arrCells) {
+            String rowString = "";
             for (Cell cell : row) {
                 // for live cell
-                if (cell.isLive())
-                    writerObj.write("o");
-                else
-                    writerObj.write(".");
+                if (cell.isLive()) {
+                    rowString = rowString + "o";
+                } else {
+                    rowString = rowString + ".";
+                }
                 // System.out.println(); for logs
             }
+            // System.out.printf("", rowString);
+            writerObj.write(rowString + "\n");
         }
+        writerObj.close();
     }
 
     /**
