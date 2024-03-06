@@ -50,6 +50,7 @@ public class Cell extends JButton {
                     setLive(true);
                     setBackground(Color.yellow);
                 }
+                System.out.println(e.getSource().hashCode());
 
             }
 
@@ -62,7 +63,7 @@ public class Cell extends JButton {
     }
 
     /**
-     * 
+     *
      * @param listAdjCells ArrayList of all adjacent cells
      * @param x            A live cell with fewer than x live neighbours dies
      * @param y            A live cell with more than y live neighbours dies
@@ -70,15 +71,26 @@ public class Cell extends JButton {
      */
     public void changeCell(ArrayList<Cell> listAdjCells, int x, int y, int z) {
 
-        int liveCells = 8;
+        int liveCells = 0;
         for (Cell newCell : listAdjCells) {
             if (!newCell.isLive()) {
                 liveCells++;
             }
         }
 
-        if (liveCells < x || liveCells == z || liveCells > y) {
-            shouldLive = false;
+        if (this.isLive()) {
+            if (liveCells < x || liveCells > y) {
+                this.shouldLive = false;
+            } else {
+                this.shouldLive = true;
+            }
+        } else {
+            if (liveCells == z) {
+                this.shouldLive = true;
+            } else {
+                this.shouldLive = false;
+            }
+
         }
     }
 
@@ -87,9 +99,11 @@ public class Cell extends JButton {
             for (Cell cell : cells) {
                 if (!cell.isShouldLive()) {
                     cell.setLive(false);
+                    cell.setBackground(Color.black);
                     cell.setShouldLive(true);
                 } else {
                     cell.setLive(true);
+                    cell.setBackground(Color.yellow);
                 }
             }
         }

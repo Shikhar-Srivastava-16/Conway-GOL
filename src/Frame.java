@@ -1,9 +1,12 @@
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -14,9 +17,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class Frame extends JFrame {
     JPanel mainGrid = new JPanel();
     JPanel buttonPanel = new JPanel();
-    JButton save = new JButton("Save");
     final JLabel saveLabel = new JLabel();
+    JButton save = new JButton("Save");
     JButton reload = new JButton("Reload");
+    JButton stepButton = new JButton("Step");
+    JButton runButton = new JButton("Run");
 
     public Frame() {
 
@@ -33,6 +38,8 @@ public class Frame extends JFrame {
 
         buttonPanel.setBounds(10, 750, 1000, 30);
         buttonPanel.setBackground(Color.MAGENTA);
+        buttonPanel.add(runButton);
+        buttonPanel.add(stepButton);
         buttonPanel.add(save);
         buttonPanel.add(saveLabel);
         buttonPanel.add(reload);
