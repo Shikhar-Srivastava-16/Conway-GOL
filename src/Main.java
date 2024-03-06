@@ -1,16 +1,12 @@
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import java.util.ArrayList;
+
 import javax.swing.UIManager;
 
 public class Main {
