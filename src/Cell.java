@@ -21,6 +21,11 @@ public class Cell extends JButton {
     // setters
     public void setLive(boolean live) {
         this.live = live;
+        if (this.live)
+            this.setBackground(Color.yellow);
+        else
+            this.setBackground(Color.black);
+
     }
 
     public void setShouldLive(boolean shouldLive) {
@@ -37,21 +42,13 @@ public class Cell extends JButton {
     }
 
     public Cell() {
-        this.live = false;
-        this.setBackground(Color.black);
+        setLive(false);
+        // this.setBackground(Color.black);
         this.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (isLive()) {
-                    setLive(false);
-                    setBackground(Color.black);
-                } else {
-                    setLive(true);
-                    setBackground(Color.yellow);
-                }
-                System.out.println(e.getSource().hashCode());
-
+                setLive(!isLive());
             }
 
         });
@@ -59,7 +56,15 @@ public class Cell extends JButton {
 
     // contructor
     public Cell(boolean mode) {
-        this.live = mode;
+        this.setLive(mode);
+        this.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setLive(!isLive());
+            }
+
+        });
     }
 
     /**
@@ -71,21 +76,21 @@ public class Cell extends JButton {
      */
     public void changeCell(ArrayList<Cell> listAdjCells, int x, int y, int z) {
 
-        int liveCells = 0;
+        int livingNeighbourCells = 0;
         for (Cell newCell : listAdjCells) {
-            if (!newCell.isLive()) {
-                liveCells++;
+            if (newCell.isLive()) {
+                livingNeighbourCells++;
             }
         }
 
         if (this.isLive()) {
-            if (liveCells < x || liveCells > y) {
+            if (livingNeighbourCells < x || livingNeighbourCells > y) {
                 this.shouldLive = false;
             } else {
                 this.shouldLive = true;
             }
         } else {
-            if (liveCells == z) {
+            if (livingNeighbourCells == z) {
                 this.shouldLive = true;
             } else {
                 this.shouldLive = false;
