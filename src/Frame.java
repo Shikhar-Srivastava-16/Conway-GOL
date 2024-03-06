@@ -1,15 +1,12 @@
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.SpringLayout;
 
 public class Frame extends JFrame {
     JPanel mainGrid = new JPanel();
@@ -20,7 +17,7 @@ public class Frame extends JFrame {
     JButton stepButton = new JButton("Step");
     JButton runButton = new JButton("Run");
 
-    public Frame() {
+    public Frame(int gridSize) {
 
         this.setLayout(null);
         setTitle("Game of Life");
@@ -33,7 +30,7 @@ public class Frame extends JFrame {
         mainGrid.setBackground(Color.BLUE);
         this.add(mainGrid);
 
-        buttonPanel.setBounds(10, 750, 1000, 30);
+        buttonPanel.setBounds(0, 850, 1080, 30);
         buttonPanel.setBackground(Color.MAGENTA);
         buttonPanel.add(runButton);
         buttonPanel.add(stepButton);
@@ -43,29 +40,31 @@ public class Frame extends JFrame {
         this.add(buttonPanel);
         buttonPanel.setVisible(true);
 
-        save.addActionListener(new ActionListener() {
+        // save.addActionListener(new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JFileChooser fileChooser = new JFileChooser();
-                FileNameExtensionFilter extensionFilter = new FileNameExtensionFilter("Game of Life Files", "gol");
-                fileChooser.setFileFilter(extensionFilter);
-                int option = fileChooser.showSaveDialog(Frame.this);
-                if (option == JFileChooser.APPROVE_OPTION) {
-                    File file = fileChooser.getSelectedFile();
+        // @Override
+        // public void actionPerformed(ActionEvent e) {
+        // JFileChooser fileChooser = new JFileChooser();
+        // FileNameExtensionFilter extensionFilter = new FileNameExtensionFilter("Game
+        // of Life Files", "gol");
+        // fileChooser.setFileFilter(extensionFilter);
+        // int option = fileChooser.showSaveDialog(Frame.this);
+        // if (option == JFileChooser.APPROVE_OPTION) {
+        // File file = fileChooser.getSelectedFile();
 
-                    // check to see if the file ends with ".gol" by extracting the absolute path and
-                    // appending it
-                    if (!file.getAbsolutePath().endsWith(".gol")) {
-                        file = new File(file + ".gol");
-                    }
-                    saveLabel.setText("File saved as: " + file.getName());
-                } else {
-                    saveLabel.setText("Save command did not work");
-                }
-            }
+        // // check to see if the file ends with ".gol" by extracting the absolute path
+        // and
+        // // appending it
+        // if (!file.getAbsolutePath().endsWith(".gol")) {
+        // file = new File(file + ".gol");
+        // }
+        // saveLabel.setText("File saved as: " + file.getName());
+        // } else {
+        // saveLabel.setText("Save command did not work");
+        // }
+        // }
 
-        });
+        // });
 
         setVisible(true);
     }
