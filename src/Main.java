@@ -1,7 +1,8 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -12,9 +13,11 @@ import javax.swing.UIManager;
 
 public class Main {
     private static boolean runningState = false;
-    private static Cell[][] arrCells = new Cell[50][50];
     private static File saveFile = new File("save.gol");
     private static int gridSize;
+    private static Cell[][] arrCells;
+    private static final char LIVE_CHAR = 'o';
+    private static final char DEAD_CHAR = '.';
 
     public static void main(String[] args) {
         try {
@@ -24,11 +27,13 @@ public class Main {
         }
 
         gridSize = 50;
+        arrCells = new Cell[gridSize][gridSize];
         Frame gameFrame = new Frame(gridSize);
+
+        makeCellArray("new");
 
         for (int i = 0; i < arrCells.length; i++) {
             for (int j = 0; j < arrCells[i].length; j++) {
-                arrCells[i][j] = new Cell();
                 gameFrame.mainGrid.add(arrCells[i][j]);
             }
         }
@@ -161,9 +166,9 @@ public class Main {
             for (Cell cell : row) {
                 // for live cell
                 if (cell.isLive()) {
-                    rowString = rowString + "o";
+                    rowString = rowString + LIVE_CHAR;
                 } else {
-                    rowString = rowString + ".";
+                    rowString = rowString + DEAD_CHAR;
                 }
                 // System.out.println(); for logs
             }
@@ -174,21 +179,43 @@ public class Main {
     }
 
     /**
+     * @throws IOException
      * 
      */
-    public static void loadSave() {
-        /*
-         * FileWriter writerObj = new FileWriter(saveFile);
-         * for (Cell[] row : arrCells) {
-         * for (Cell cell : row) {
-         * // for live cell
-         * if (cell.isLive())
-         * writerObj.write("o");
-         * else
-         * writerObj.write(".");
-         * // System.out.println(); for logs
-         * }
-         * }
-         */
+    public static void loadSave(File saveFile) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(saveFile));
+        String line;
+        for (Cell[] cells : arrCells) {
+            line = reader.readLine();
+            for (int i = 0; i < cells.length; i++) {
+                if (line.charAt(i) == LIVE_CHAR) {
+                    cells[i] = new Cell(true);
+                } else if (line.charAt(i) == DEAD_CHAR) {
+                    cells[i] = new Cell(false);
+                }
+            }
+        }
+        reader.close();
+    }
+
+    public static void makeCellArray(String mode) {
+        if (mode.equals("new")) {
+
+            for (int i = 0; i < gridSize; i++) {
+                for (int j = 0; j < gridSize; j++) {
+                    arrCells[i][j] = new Cell();
+                }
+            }
+
+        } else if (mode.equals("save")) {
+
+            try {
+                loadSave(saveFile);
+            } catch (Exception e) {
+                System.out.println("eror saveFile nonexistent");
+            }
+        } else {
+            System.out.println("eror");
+        }
     }
 }

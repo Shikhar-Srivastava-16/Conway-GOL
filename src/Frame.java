@@ -1,12 +1,10 @@
 import java.awt.Color;
 import java.awt.GridLayout;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SpringLayout;
 
 public class Frame extends JFrame {
     JPanel mainGrid = new JPanel();
