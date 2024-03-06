@@ -43,7 +43,6 @@ public class Cell extends JButton {
 
     public Cell() {
         setLive(false);
-        // this.setBackground(Color.black);
         this.addActionListener(new ActionListener() {
 
             @Override
