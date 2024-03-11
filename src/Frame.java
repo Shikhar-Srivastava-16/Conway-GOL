@@ -16,13 +16,16 @@ public class Frame extends JFrame {
     private static Timer timer;
     int delay;
 
-    public Frame(int gridSize) {
+    public Frame() {
         setResizable(false);
         setLayout(null);
         setTitle("Game of Life");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(760, 832);
-        getContentPane().setBackground(Color.black);
+        setSize(1500, 1000);
+
+    }
+
+    public void makeGameReady() {
 
         mainGrid.setLayout(new GridLayout(50, 50, 0, 0));
         mainGrid.setBounds(30, 30, 700, 700);
@@ -41,7 +44,6 @@ public class Frame extends JFrame {
         this.add(buttonPanel);
         buttonPanel.setVisible(true);
 
-        
         setVisible(true);
     }
 
