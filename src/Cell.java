@@ -103,11 +103,9 @@ public class Cell extends JButton {
             for (Cell cell : cells) {
                 if (!cell.isShouldLive()) {
                     cell.setLive(false);
-                    cell.setBackground(Color.black);
                     cell.setShouldLive(true);
                 } else {
                     cell.setLive(true);
-                    cell.setBackground(Color.yellow);
                 }
             }
         }

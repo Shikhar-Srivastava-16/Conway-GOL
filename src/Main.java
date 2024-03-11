@@ -9,11 +9,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.FileSystemException;
 import java.util.ArrayList;
-import java.util.Timer;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JSlider;
 import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -231,7 +229,6 @@ public class Main {
     public static void loadSave() throws FileSystemException {
 
         File loadFile = null;
-
         JFileChooser fileChooser = new JFileChooser();
         int option = fileChooser.showOpenDialog(null);
         if (option == JFileChooser.APPROVE_OPTION) {
@@ -246,25 +243,23 @@ public class Main {
             System.out.println("load command canceled");
         }
 
-        String line = "";
-        int lineCount = 0;
-        try (BufferedReader reader = new BufferedReader(new FileReader(loadFile))) {
-            while ((line = reader.readLine()) != null) {
-                lineCount++;
-                for (int i = 0; i < line.length(); i++) {
-                    String c = String.valueOf(line.charAt(i));
-                    if (c.equals("o")) {
-                        arrCells[lineCount][i].setLive(true);
-                    } else {
-                        arrCells[lineCount][i].setLive(false);
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(loadFile));
+            String line;
+            for (Cell[] row : arrCells) {
+                line = reader.readLine();
+                for (int i = 0; i < gridSize; i++) {
+                    if (line.charAt(i) == 'o') {
+                        row[i].setLive(true);
+                    } else if (line.charAt(i) == '.') {
+                        row[i].setLive(false);
                     }
                 }
-                System.out.println(line);
             }
-
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+
 
     }
 
