@@ -8,13 +8,16 @@ public class Frame extends JFrame {
     JPanel buttonPanel = new JPanel();
     final JLabel saveLabel = new JLabel();
     JButton save = new JButton("Save");
-    JButton reload = new JButton("Reload");
+    JButton load = new JButton("Reload");
     JButton stepButton = new JButton("Step");
     JButton runButton = new JButton("Run");
     JButton clearButton = new JButton("Clear");
     JSlider framesPerSecond = new JSlider(JSlider.HORIZONTAL, 250, 1000, 750);
-    private static Timer timer;
+    JPanel fieldPanel = new JPanel(new GridLayout(6, 1));
     int delay;
+    JTextField xField = new JTextField("2");
+    JTextField yField = new JTextField("3");
+    JTextField zField = new JTextField("3");
 
     public Frame() {
         setResizable(false);
@@ -25,9 +28,18 @@ public class Frame extends JFrame {
 
     }
 
-    public void makeGameReady() {
+    public void makeGameReady(int gridSize) {
 
-        mainGrid.setLayout(new GridLayout(50, 50, 0, 0));
+        fieldPanel.add(new JLabel("value of x"));
+        fieldPanel.add(xField);
+        fieldPanel.add(new JLabel("value of y"));
+        fieldPanel.add(yField);
+        fieldPanel.add(new JLabel("value of z"));
+        fieldPanel.add(zField);
+        fieldPanel.setBounds(800, 200, 100, 600);
+        add(fieldPanel);
+
+        mainGrid.setLayout(new GridLayout(gridSize, gridSize));
         mainGrid.setBounds(30, 30, 700, 700);
         mainGrid.setBackground(Color.BLUE);
         this.add(mainGrid);
@@ -39,7 +51,7 @@ public class Frame extends JFrame {
         buttonPanel.add(stepButton);
         buttonPanel.add(save);
         buttonPanel.add(saveLabel);
-        buttonPanel.add(reload);
+        buttonPanel.add(load);
         buttonPanel.add(framesPerSecond);
         this.add(buttonPanel);
         buttonPanel.setVisible(true);
@@ -47,4 +59,7 @@ public class Frame extends JFrame {
         setVisible(true);
     }
 
+    public void makeMenuReady() {
+
+    }
 }
