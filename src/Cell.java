@@ -2,11 +2,9 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.JButton;
 
 public class Cell extends JButton {
-
     // attributes
     /**
      * for live = true, cell is live
@@ -41,6 +39,7 @@ public class Cell extends JButton {
         return live;
     }
 
+    // contructor
     public Cell() {
         setLive(false);
         this.addActionListener(new ActionListener() {
@@ -53,18 +52,18 @@ public class Cell extends JButton {
         });
     }
 
-    // contructor
-    public Cell(boolean mode) {
-        this.setLive(mode);
-        this.addActionListener(new ActionListener() {
+    
+    // public Cell(boolean mode) {
+    //     this.setLive(mode);
+    //     this.addActionListener(new ActionListener() {
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setLive(!isLive());
-            }
+    //         @Override
+    //         public void actionPerformed(ActionEvent e) {
+    //             setLive(!isLive());
+    //         }
 
-        });
-    }
+    //     });
+    // }
 
     /**
      *
@@ -98,6 +97,12 @@ public class Cell extends JButton {
         }
     }
 
+    /**
+     *
+     * @param map A 2D cell array which represents the grid/map for the game
+     * method itterates through all the cells and checks its should live status
+     * if it is false it will set the cells live status to false and its should live to true and vice verca
+     */
     public static void changeEndTurn(Cell[][] map) {
         for (Cell[] cells : map) {
             for (Cell cell : cells) {
