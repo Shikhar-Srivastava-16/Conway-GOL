@@ -18,6 +18,8 @@ public class Frame extends JFrame {
     JTextField xField = new JTextField("2");
     JTextField yField = new JTextField("3");
     JTextField zField = new JTextField("3");
+    JButton starter = new JButton("Start Game");
+    JTextField gridField = new JTextField();
 
     public Frame() {
         setResizable(false);
@@ -56,10 +58,21 @@ public class Frame extends JFrame {
         this.add(buttonPanel);
         buttonPanel.setVisible(true);
 
+
         setVisible(true);
     }
 
     public void makeMenuReady() {
+        starter.setBounds(100, 100, 100, 50);
+        add(starter);
 
+        JLabel gridLabel = new JLabel("Size of Grid to start with");
+        gridLabel.setBounds(200, 100, 100, 50);
+        add(gridLabel);
+
+        gridField.setBounds(300, 100, 100, 50);
+        add(gridField);
+
+        setVisible(true);
     }
 }

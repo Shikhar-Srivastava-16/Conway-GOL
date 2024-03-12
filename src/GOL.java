@@ -1,3 +1,5 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -15,9 +17,14 @@ public class GOL {
     public boolean runningState = false;
     public int gridSize, x, y, z;
 
+
     public Cell[][] arrCells;
     public Frame gameFrame;
     public int frameRate = 750;
+
+    public void setGridSize(int gridSize) {
+        this.gridSize = gridSize;
+    }
 
     public void setX(int x) {
         this.x = x;
@@ -31,16 +38,34 @@ public class GOL {
         this.z = z;
     }
 
-    public GOL(int gridSize, int x, int y, int z) {
+    public GOL(int x, int y, int z) {
 
-        this.gridSize = gridSize;
+        this.gridSize = 50;
         this.x = x;
         this.y = y;
         this.z = z;
 
-        arrCells = new Cell[gridSize][gridSize];
         gameFrame = new Frame();
-        gameFrame.makeGameReady(gridSize);
+        // gameFrame.makeGameReady(gridSize);
+        gameFrame.makeMenuReady();
+        gameFrame.starter.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setup();
+            }
+
+        });
+
+    }
+
+    public void setup() {
+        gameFrame.getContentPane().removeAll();
+        gameFrame.repaint();
+        int size = Integer.parseInt(gameFrame.gridField.getText());
+        setGridSize(size);
+        arrCells = new Cell[gridSize][gridSize];
+        gameFrame.makeGameReady(size);
         initializeEmptyGrid();
 
         gameFrame.mainGrid.setVisible(true);
@@ -57,7 +82,6 @@ public class GOL {
             }
 
         });
-
     }
 
     public void initializeEmptyGrid() {
