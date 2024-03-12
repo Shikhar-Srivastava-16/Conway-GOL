@@ -1,6 +1,6 @@
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.io.File;
+import java.util.Hashtable;
 
 import javax.swing.*;
 
@@ -13,6 +13,7 @@ public class Frame extends JFrame {
     JButton stepButton = new JButton("Step");
     JButton runButton = new JButton("Run");
     JButton clearButton = new JButton("Clear");
+    JButton exitButton = new JButton("Exit");
     JSlider framesPerSecond = new JSlider(JSlider.HORIZONTAL, 250, 1000, 750);
     JPanel fieldPanel = new JPanel(new GridLayout(6, 1));
     int delay;
@@ -20,7 +21,7 @@ public class Frame extends JFrame {
     JTextField yField = new JTextField("3");
     JTextField zField = new JTextField("3");
     JButton starter = new JButton("Start Game");
-    JTextField gridField = new JTextField();
+    JTextField gridField = new JTextField("50");
 
     public Frame() {
         setResizable(false);
@@ -38,12 +39,11 @@ public class Frame extends JFrame {
         fieldPanel.add(yField);
         fieldPanel.add(new JLabel("value of z"));
         fieldPanel.add(zField);
-        fieldPanel.setBounds(800, 200, 100, 600);
+        fieldPanel.setBounds(800, 50, 100, 600);
         add(fieldPanel);
 
         mainGrid.setLayout(new GridLayout(gridSize, gridSize));
         mainGrid.setBounds(30, 30, 700, 700);
-        mainGrid.setBackground(Color.BLUE);
         this.add(mainGrid);
 
         buttonPanel.setBounds(0, 760, 760, 50);
@@ -54,7 +54,14 @@ public class Frame extends JFrame {
         buttonPanel.add(save);
         buttonPanel.add(saveLabel);
         buttonPanel.add(load);
+        framesPerSecond.setInverted(true);
+        Hashtable<Integer, JLabel> sliderLabels = new Hashtable<>();
+        sliderLabels.put(1000, new JLabel("slow"));
+        sliderLabels.put(250, new JLabel("fast"));
+        framesPerSecond.setLabelTable(sliderLabels);
+        framesPerSecond.setPaintLabels(true);
         buttonPanel.add(framesPerSecond);
+        buttonPanel.add(exitButton);
         this.add(buttonPanel);
         buttonPanel.setVisible(true);
 

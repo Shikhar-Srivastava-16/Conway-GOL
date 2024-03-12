@@ -17,7 +17,6 @@ public class GOL {
     public boolean runningState = false;
     public int gridSize, x, y, z;
 
-
     public Cell[][] arrCells;
     public Frame gameFrame;
     public int frameRate = 750;
@@ -128,7 +127,12 @@ public class GOL {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                setX(Integer.parseInt(gameFrame.xField.getText()));
+                try {
+                    setX(Integer.parseInt(gameFrame.xField.getText()));
+                } catch (IllegalArgumentException a) {
+                    System.out.println("x should be an integer");
+                }
+                
             }
 
         });
@@ -137,7 +141,12 @@ public class GOL {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                setY(Integer.parseInt(gameFrame.yField.getText()));
+                try {
+                    setY(Integer.parseInt(gameFrame.yField.getText()));
+                } catch (IllegalArgumentException a) {
+                    System.out.println("y should be an integer");
+                }
+                
             }
 
         });
@@ -146,7 +155,26 @@ public class GOL {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                setZ(Integer.parseInt(gameFrame.zField.getText()));
+                try {
+                    setZ(Integer.parseInt(gameFrame.zField.getText()));
+                } catch (IllegalArgumentException a) {
+                    System.out.println("z should be an integer");
+                }
+                
+            }
+
+        });
+
+        gameFrame.exitButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameFrame.getContentPane().removeAll();
+                gameFrame.repaint();
+                gameFrame.mainGrid.removeAll();
+                gameFrame.fieldPanel.removeAll();
+                arrCells = null;
+                gameFrame.makeMenuReady();
             }
 
         });
@@ -155,23 +183,47 @@ public class GOL {
     public void setup() {
         gameFrame.getContentPane().removeAll();
         gameFrame.repaint();
-        int size = Integer.parseInt(gameFrame.gridField.getText());
-        setGridSize(size);
-        arrCells = new Cell[gridSize][gridSize];
-        gameFrame.makeGameReady(size);
-        initializeEmptyGrid();
 
-        gameFrame.mainGrid.setVisible(true);
-        gameFrame.setVisible(true);
+        try {
+            int size = Integer.parseInt(gameFrame.gridField.getText());
+            setGridSize(size);
+            arrCells = new Cell[gridSize][gridSize];
+            gameFrame.makeGameReady(size);
 
-        gameFrame.framesPerSecond.addChangeListener(new ChangeListener() {
+            initializeEmptyGrid();
 
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                frameRate = gameFrame.framesPerSecond.getValue();
-            }
+            gameFrame.mainGrid.setVisible(true);
+            gameFrame.setVisible(true);
 
-        });
+            gameFrame.framesPerSecond.addChangeListener(new ChangeListener() {
+
+                @Override
+                public void stateChanged(ChangeEvent e) {
+                    frameRate = gameFrame.framesPerSecond.getValue();
+                }
+
+            });
+        } catch (NumberFormatException e) {
+            System.out.println("not a number");
+            gameFrame.getContentPane().removeAll();
+                gameFrame.repaint();
+                gameFrame.mainGrid.removeAll();
+                gameFrame.fieldPanel.removeAll();
+                arrCells = null;
+                gameFrame.makeMenuReady();
+
+        } catch(IllegalArgumentException e) {
+            System.out.println("0 not a valid grid size");
+            gameFrame.getContentPane().removeAll();
+                gameFrame.repaint();
+                gameFrame.mainGrid.removeAll();
+                gameFrame.fieldPanel.removeAll();
+                arrCells = null;
+                gameFrame.makeMenuReady();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void initializeEmptyGrid() {
@@ -291,6 +343,7 @@ public class GOL {
             }
             reader.close();
         } catch (IOException e) {
+            System.out.println("test");
             System.out.println(e.getMessage());
         }
     }
