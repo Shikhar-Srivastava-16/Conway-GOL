@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.io.File;
 
 import javax.swing.*;
 
@@ -26,8 +27,7 @@ public class Frame extends JFrame {
         setLayout(null);
         setTitle("Game of Life");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1500, 1000);
-
+        setSize(1400, 1000);
     }
 
     public void makeGameReady(int gridSize) {
@@ -63,14 +63,19 @@ public class Frame extends JFrame {
     }
 
     public void makeMenuReady() {
-        starter.setBounds(100, 100, 100, 50);
+
+        JLabel background = new JLabel(new ImageIcon("./assets/others/GOL-opening.png"));
+        background.setBounds(0, 30, 1400, 1000);
+        add(background);
+
+        starter.setBounds(800, 800, 200, 100);
         add(starter);
 
         JLabel gridLabel = new JLabel("Size of Grid to start with");
-        gridLabel.setBounds(200, 100, 100, 50);
+        gridLabel.setBounds(500, 800, 150, 50);
         add(gridLabel);
 
-        gridField.setBounds(300, 100, 100, 50);
+        gridField.setBounds(650, 800, 100, 50);
         add(gridField);
 
         setVisible(true);

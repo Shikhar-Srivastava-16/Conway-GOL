@@ -59,6 +59,99 @@ public class GOL {
 
     }
 
+    public void addButtonActions() {
+        gameFrame.stepButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                step(x, y, z);
+            }
+        });
+
+        gameFrame.save.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    saveGame();
+                } catch (Exception a) {
+                    System.out.println(a.getMessage());
+                    System.out.println("Main.addActions(...).new ActionListener() {...}.actionPerformed()");
+                }
+            }
+
+        });
+
+        gameFrame.runButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (runningState == false) {
+                    runningState = true;
+                    gameFrame.runButton.setText("Stop");
+                } else {
+                    runningState = false;
+                    gameFrame.runButton.setText("Run");
+                }
+
+                Thread task = new Thread(new ReasourceIntensiveTask());
+                task.start();
+
+            }
+        });
+
+        gameFrame.load.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                try {
+                    loadSave();
+                } catch (Exception a) {
+                    System.out.println(a.getMessage());
+                }
+
+            }
+
+        });
+
+        gameFrame.clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (int i = 0; i < arrCells.length; i++) {
+                    for (int j = 0; j < arrCells[i].length; j++) {
+                        arrCells[i][j].setLive(false);
+                    }
+                }
+            }
+
+        });
+
+        gameFrame.xField.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setX(Integer.parseInt(gameFrame.xField.getText()));
+            }
+
+        });
+
+        gameFrame.yField.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setY(Integer.parseInt(gameFrame.yField.getText()));
+            }
+
+        });
+
+        gameFrame.zField.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setZ(Integer.parseInt(gameFrame.zField.getText()));
+            }
+
+        });
+    }
+
     public void setup() {
         gameFrame.getContentPane().removeAll();
         gameFrame.repaint();
@@ -67,9 +160,6 @@ public class GOL {
         arrCells = new Cell[gridSize][gridSize];
         gameFrame.makeGameReady(size);
         initializeEmptyGrid();
-
-        gameFrame.mainGrid.setVisible(true);
-        gameFrame.setVisible(true);
 
         gameFrame.mainGrid.setVisible(true);
         gameFrame.setVisible(true);
@@ -215,4 +305,18 @@ public class GOL {
         }
     }
 
+    public class ReasourceIntensiveTask implements Runnable {
+
+        @Override
+        public void run() {
+            while (runningState) {
+                step(x, y, z);
+                try {
+                    Thread.sleep(frameRate);
+                } catch (InterruptedException e) {
+                    System.out.println("Interrupted!");
+                }
+            }
+        }
+    }
 }

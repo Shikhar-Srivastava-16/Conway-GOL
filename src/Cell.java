@@ -22,9 +22,9 @@ public class Cell extends JButton {
     public void setLive(boolean live) {
         this.live = live;
         if (this.live)
-            this.setBackground(Color.yellow);
+            this.setBackground(Color.BLACK);
         else
-            this.setBackground(Color.black);
+            this.setBackground(Color.WHITE);
 
     }
 
