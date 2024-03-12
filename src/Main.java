@@ -15,7 +15,7 @@ public class Main {
             e.printStackTrace();
         }
 
-        gol = new GOL(100, 2, 3, 3);
+        gol = new GOL(2, 3, 3);
         addButtonActions();
     }
 
