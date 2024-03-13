@@ -330,6 +330,7 @@ public class GOL {
 
     public File openSaveFile() throws FileSystemException {
         File loadFile = null;
+
         JFileChooser fileChooser = new JFileChooser();
         int option = fileChooser.showOpenDialog(null);
         if (option == JFileChooser.APPROVE_OPTION) {
