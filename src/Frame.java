@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.awt.GridLayout;
 import java.util.Hashtable;
 
@@ -6,16 +5,16 @@ import javax.swing.*;
 
 public class Frame extends JFrame {
     JPanel mainGrid = new JPanel();
-    JPanel buttonPanel = new JPanel();
+    JPanel buttonPanel = new JPanel(new GridLayout(1, 6, 3, 3));
     final JLabel saveLabel = new JLabel();
     JButton save = new JButton("Save");
-    JButton load = new JButton("Reload");
-    JButton stepButton = new JButton("Step");
+    JButton load = new JButton("Load");
+    JButton stepButton = new JButton("New Generation");
     JButton runButton = new JButton("Run");
     JButton clearButton = new JButton("Clear");
     JButton exitButton = new JButton("Exit");
-    JSlider framesPerSecond = new JSlider(JSlider.HORIZONTAL, 250, 1000, 750);
-    JPanel fieldPanel = new JPanel(new GridLayout(6, 1));
+    JSlider framesPerSecond = new JSlider(JSlider.HORIZONTAL, 250, 1500, 750);
+    JPanel fieldPanel = new JPanel(new GridLayout(3, 2));
     int delay;
     JTextField xField = new JTextField("2");
     JTextField yField = new JTextField("3");
@@ -39,32 +38,32 @@ public class Frame extends JFrame {
         fieldPanel.add(yField);
         fieldPanel.add(new JLabel("value of z"));
         fieldPanel.add(zField);
-        fieldPanel.setBounds(800, 50, 100, 600);
+        fieldPanel.setBounds(800, 300, 200, 150);
         add(fieldPanel);
 
         mainGrid.setLayout(new GridLayout(gridSize, gridSize));
         mainGrid.setBounds(30, 30, 700, 700);
         this.add(mainGrid);
 
-        buttonPanel.setBounds(0, 760, 760, 50);
-        buttonPanel.setBackground(new Color(0, 0, 128));
+        buttonPanel.setBounds(0, 760, 800, 100);
         buttonPanel.add(clearButton);
         buttonPanel.add(runButton);
         buttonPanel.add(stepButton);
         buttonPanel.add(save);
-        buttonPanel.add(saveLabel);
         buttonPanel.add(load);
+
         framesPerSecond.setInverted(true);
         Hashtable<Integer, JLabel> sliderLabels = new Hashtable<>();
-        sliderLabels.put(1000, new JLabel("slow"));
-        sliderLabels.put(250, new JLabel("fast"));
+        sliderLabels.put(1500, new JLabel("Slow"));
+        sliderLabels.put(250, new JLabel("Fast"));
         framesPerSecond.setLabelTable(sliderLabels);
         framesPerSecond.setPaintLabels(true);
-        buttonPanel.add(framesPerSecond);
+        framesPerSecond.setBounds(0, 860, 760, 50);
+        add(framesPerSecond);
+
         buttonPanel.add(exitButton);
         this.add(buttonPanel);
         buttonPanel.setVisible(true);
-
 
         setVisible(true);
     }
