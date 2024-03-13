@@ -6,7 +6,7 @@ import javax.swing.*;
 public class Frame extends JFrame {
     public JPanel mainGrid = new JPanel();
     // -------!-------
-    private JPanel buttonPanel = new JPanel(new GridLayout(1, 6, 3, 3));
+    // private JPanel buttonPanel = new JPanel(new GridLayout(1, 6, 3, 3));
     public JButton save = new JButton("Save");
     public JButton load = new JButton("Load");
     public JButton stepButton = new JButton("New Generation");
@@ -26,30 +26,41 @@ public class Frame extends JFrame {
         setLayout(null);
         setTitle("Conway's Game of Life");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1400, 1000);
+        setSize(1170, 860);
     }
 
     public void makeGameReady(int gridSize) {
 
-        fieldPanel.add(new JLabel("value of x"));
+        fieldPanel.add(new JLabel("value of x:"));
         fieldPanel.add(xField);
-        fieldPanel.add(new JLabel("value of y"));
+        fieldPanel.add(new JLabel("value of y:"));
         fieldPanel.add(yField);
-        fieldPanel.add(new JLabel("value of z"));
+        fieldPanel.add(new JLabel("value of z:"));
         fieldPanel.add(zField);
-        fieldPanel.setBounds(800, 300, 200, 150);
+        fieldPanel.setBounds(830, 430, 300, 150);
         add(fieldPanel);
 
         mainGrid.setLayout(new GridLayout(gridSize, gridSize));
-        mainGrid.setBounds(0, 0, 800, 800);
+        mainGrid.setBounds(10, 10, 800, 800);
         this.add(mainGrid);
 
-        buttonPanel.setBounds(0, 800, 700, 70);
-        buttonPanel.add(clearButton);
-        buttonPanel.add(runButton);
-        buttonPanel.add(stepButton);
-        buttonPanel.add(save);
-        buttonPanel.add(load);
+        // buttonPanel.setBounds(0, 800, 700, 70);
+        // buttonPanel.add(clearButton);
+        // buttonPanel.add(runButton);
+        // buttonPanel.add(stepButton);
+        // buttonPanel.add(save);
+        // buttonPanel.add(load);
+
+        runButton.setBounds(830, 50, 300, 70);
+        add(runButton);
+        clearButton.setBounds(830, 126, 300, 70);
+        add(clearButton);
+        stepButton.setBounds(830, 202, 300, 70);
+        add(stepButton);
+        save.setBounds(830, 278, 147, 70);
+        add(save);
+        load.setBounds(983, 278, 147, 70);
+        add(load);
 
         framesPerSecond.setInverted(true);
         Hashtable<Integer, JLabel> sliderLabels = new Hashtable<>();
@@ -57,12 +68,14 @@ public class Frame extends JFrame {
         sliderLabels.put(100, new JLabel("Fast"));
         framesPerSecond.setLabelTable(sliderLabels);
         framesPerSecond.setPaintLabels(true);
-        framesPerSecond.setBounds(0, 870, 700, 50);
+        framesPerSecond.setBounds(830, 580, 300, 50);
         add(framesPerSecond);
 
-        buttonPanel.add(exitButton);
-        this.add(buttonPanel);
-        buttonPanel.setVisible(true);
+        // buttonPanel.add(exitButton);
+        exitButton.setBounds(830, 354, 300, 70);
+        add(exitButton);
+        // this.add(buttonPanel);
+        // buttonPanel.setVisible(true);
 
         setVisible(true);
     }
@@ -70,17 +83,17 @@ public class Frame extends JFrame {
     public void makeMenuReady() {
 
         JLabel background = new JLabel(new ImageIcon("./assets/others/GOL-opening.png"));
-        background.setBounds(0, 30, 1400, 1000);
+        background.setBounds(0, 0, 1170, 1100);
         add(background);
 
-        starter.setBounds(800, 800, 200, 100);
+        starter.setBounds(100, 555, 200, 70);
         add(starter);
 
-        JLabel gridLabel = new JLabel("Size of Grid to start with");
-        gridLabel.setBounds(500, 800, 150, 50);
+        JLabel gridLabel = new JLabel("Initial Size of Grid");
+        gridLabel.setBounds(100, 500, 100, 50);
         add(gridLabel);
 
-        gridField.setBounds(650, 800, 100, 50);
+        gridField.setBounds(200, 500, 100, 50);
         add(gridField);
 
         setVisible(true);
