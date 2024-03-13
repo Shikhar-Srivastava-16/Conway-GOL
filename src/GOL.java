@@ -352,21 +352,6 @@ public class GOL {
      */
     public void loadSave() throws FileSystemException {
 
-        // File loadFile = null;
-        // JFileChooser fileChooser = new JFileChooser();
-        // int option = fileChooser.showOpenDialog(null);
-        // if (option == JFileChooser.APPROVE_OPTION) {
-        // if (fileChooser.getSelectedFile().getName().contains(".gol")) {
-        // loadFile = fileChooser.getSelectedFile();
-        // System.out.println("File opened: " + loadFile.getName());
-        // } else {
-        // String fileName = fileChooser.getSelectedFile().getName();
-        // throw new FileSystemException(fileName + " is not a .gol file");
-        // }
-        // } else {
-        // System.out.println("load command canceled");
-        // }
-
         try {
             BufferedReader reader = new BufferedReader(new FileReader(openSaveFile()));
             String line;

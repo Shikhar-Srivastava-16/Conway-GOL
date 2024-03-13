@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 
 public class Cell extends JButton {
@@ -42,6 +44,7 @@ public class Cell extends JButton {
     // contructor
     public Cell() {
         setLive(false);
+        setBorder(BorderFactory.createEtchedBorder());
         this.addActionListener(new ActionListener() {
 
             @Override
@@ -51,19 +54,6 @@ public class Cell extends JButton {
 
         });
     }
-
-    
-    // public Cell(boolean mode) {
-    //     this.setLive(mode);
-    //     this.addActionListener(new ActionListener() {
-
-    //         @Override
-    //         public void actionPerformed(ActionEvent e) {
-    //             setLive(!isLive());
-    //         }
-
-    //     });
-    // }
 
     /**
      *

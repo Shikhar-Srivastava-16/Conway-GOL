@@ -5,8 +5,6 @@ import javax.swing.*;
 
 public class Frame extends JFrame {
     public JPanel mainGrid = new JPanel();
-    // -------!-------
-    // private JPanel buttonPanel = new JPanel(new GridLayout(1, 6, 3, 3));
     public JButton save = new JButton("Save");
     public JButton load = new JButton("Load");
     public JButton stepButton = new JButton("New Generation");
@@ -44,13 +42,6 @@ public class Frame extends JFrame {
         mainGrid.setBounds(10, 10, 800, 800);
         this.add(mainGrid);
 
-        // buttonPanel.setBounds(0, 800, 700, 70);
-        // buttonPanel.add(clearButton);
-        // buttonPanel.add(runButton);
-        // buttonPanel.add(stepButton);
-        // buttonPanel.add(save);
-        // buttonPanel.add(load);
-
         runButton.setBounds(830, 50, 300, 70);
         add(runButton);
         clearButton.setBounds(830, 126, 300, 70);
@@ -62,6 +53,9 @@ public class Frame extends JFrame {
         load.setBounds(983, 278, 147, 70);
         add(load);
 
+        exitButton.setBounds(830, 354, 300, 70);
+        add(exitButton);
+
         framesPerSecond.setInverted(true);
         Hashtable<Integer, JLabel> sliderLabels = new Hashtable<>();
         sliderLabels.put(1500, new JLabel("Slow"));
@@ -70,12 +64,6 @@ public class Frame extends JFrame {
         framesPerSecond.setPaintLabels(true);
         framesPerSecond.setBounds(830, 580, 300, 50);
         add(framesPerSecond);
-
-        // buttonPanel.add(exitButton);
-        exitButton.setBounds(830, 354, 300, 70);
-        add(exitButton);
-        // this.add(buttonPanel);
-        // buttonPanel.setVisible(true);
 
         setVisible(true);
     }
