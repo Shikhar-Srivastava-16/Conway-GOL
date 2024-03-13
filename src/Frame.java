@@ -4,28 +4,27 @@ import java.util.Hashtable;
 import javax.swing.*;
 
 public class Frame extends JFrame {
-    JPanel mainGrid = new JPanel();
-    JPanel buttonPanel = new JPanel(new GridLayout(1, 6, 3, 3));
-    final JLabel saveLabel = new JLabel();
-    JButton save = new JButton("Save");
-    JButton load = new JButton("Load");
-    JButton stepButton = new JButton("New Generation");
-    JButton runButton = new JButton("Run");
-    JButton clearButton = new JButton("Clear");
-    JButton exitButton = new JButton("Exit");
-    JSlider framesPerSecond = new JSlider(JSlider.HORIZONTAL, 250, 1500, 750);
-    JPanel fieldPanel = new JPanel(new GridLayout(3, 2));
-    int delay;
-    JTextField xField = new JTextField("2");
-    JTextField yField = new JTextField("3");
-    JTextField zField = new JTextField("3");
-    JButton starter = new JButton("Start Game");
-    JTextField gridField = new JTextField("50");
+    public JPanel mainGrid = new JPanel();
+    // -------!-------
+    private JPanel buttonPanel = new JPanel(new GridLayout(1, 6, 3, 3));
+    public JButton save = new JButton("Save");
+    public JButton load = new JButton("Load");
+    public JButton stepButton = new JButton("New Generation");
+    public JButton runButton = new JButton("Run");
+    public JButton clearButton = new JButton("Clear");
+    public JButton exitButton = new JButton("Exit");
+    public JSlider framesPerSecond = new JSlider(JSlider.HORIZONTAL, 100, 1500, 800);
+    public JPanel fieldPanel = new JPanel(new GridLayout(3, 2));
+    public JTextField xField = new JTextField("2");
+    public JTextField yField = new JTextField("3");
+    public JTextField zField = new JTextField("3");
+    public JButton starter = new JButton("Start Game");
+    public JTextField gridField = new JTextField("50");
 
     public Frame() {
         setResizable(false);
         setLayout(null);
-        setTitle("Game of Life");
+        setTitle("Conway's Game of Life");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1400, 1000);
     }
@@ -42,10 +41,10 @@ public class Frame extends JFrame {
         add(fieldPanel);
 
         mainGrid.setLayout(new GridLayout(gridSize, gridSize));
-        mainGrid.setBounds(30, 30, 700, 700);
+        mainGrid.setBounds(0, 0, 800, 800);
         this.add(mainGrid);
 
-        buttonPanel.setBounds(0, 760, 800, 100);
+        buttonPanel.setBounds(0, 800, 700, 70);
         buttonPanel.add(clearButton);
         buttonPanel.add(runButton);
         buttonPanel.add(stepButton);
@@ -55,10 +54,10 @@ public class Frame extends JFrame {
         framesPerSecond.setInverted(true);
         Hashtable<Integer, JLabel> sliderLabels = new Hashtable<>();
         sliderLabels.put(1500, new JLabel("Slow"));
-        sliderLabels.put(250, new JLabel("Fast"));
+        sliderLabels.put(100, new JLabel("Fast"));
         framesPerSecond.setLabelTable(sliderLabels);
         framesPerSecond.setPaintLabels(true);
-        framesPerSecond.setBounds(0, 860, 760, 50);
+        framesPerSecond.setBounds(0, 870, 700, 50);
         add(framesPerSecond);
 
         buttonPanel.add(exitButton);
