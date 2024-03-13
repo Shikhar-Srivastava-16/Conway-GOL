@@ -132,7 +132,7 @@ public class GOL {
                 } catch (IllegalArgumentException a) {
                     System.out.println("x should be an integer");
                 }
-                
+
             }
 
         });
@@ -146,7 +146,7 @@ public class GOL {
                 } catch (IllegalArgumentException a) {
                     System.out.println("y should be an integer");
                 }
-                
+
             }
 
         });
@@ -160,7 +160,7 @@ public class GOL {
                 } catch (IllegalArgumentException a) {
                     System.out.println("z should be an integer");
                 }
-                
+
             }
 
         });
@@ -169,6 +169,12 @@ public class GOL {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                if (runningState) {
+                    runningState = false;
+                    gameFrame.runButton.setText("Run");
+                }
+
                 gameFrame.getContentPane().removeAll();
                 gameFrame.repaint();
                 gameFrame.mainGrid.removeAll();
@@ -206,20 +212,20 @@ public class GOL {
         } catch (NumberFormatException e) {
             System.out.println("not a number");
             gameFrame.getContentPane().removeAll();
-                gameFrame.repaint();
-                gameFrame.mainGrid.removeAll();
-                gameFrame.fieldPanel.removeAll();
-                arrCells = null;
-                gameFrame.makeMenuReady();
+            gameFrame.repaint();
+            gameFrame.mainGrid.removeAll();
+            gameFrame.fieldPanel.removeAll();
+            arrCells = null;
+            gameFrame.makeMenuReady();
 
-        } catch(IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             System.out.println("0 not a valid grid size");
             gameFrame.getContentPane().removeAll();
-                gameFrame.repaint();
-                gameFrame.mainGrid.removeAll();
-                gameFrame.fieldPanel.removeAll();
-                arrCells = null;
-                gameFrame.makeMenuReady();
+            gameFrame.repaint();
+            gameFrame.mainGrid.removeAll();
+            gameFrame.fieldPanel.removeAll();
+            arrCells = null;
+            gameFrame.makeMenuReady();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -281,18 +287,18 @@ public class GOL {
      * 
      */
     public void saveGame() throws IOException {
-        File saveFile = null;
+        // File saveFile = null;
 
-        JFileChooser fileChooser = new JFileChooser();
-        int option = fileChooser.showSaveDialog(null);
-        if (option == JFileChooser.APPROVE_OPTION) {
-            saveFile = changeExtension(fileChooser.getSelectedFile(), ".gol");
-            System.out.println("File Saved as: " + saveFile.getName());
-        } else {
-            System.out.println("Save command canceled");
-        }
+        // JFileChooser fileChooser = new JFileChooser();
+        // int option = fileChooser.showSaveDialog(null);
+        // if (option == JFileChooser.APPROVE_OPTION) {
+        // saveFile = changeExtension(fileChooser.getSelectedFile(), ".gol");
+        // System.out.println("File Saved as: " + saveFile.getName());
+        // } else {
+        // System.out.println("Save command canceled");
+        // }
 
-        FileWriter writerObj = new FileWriter(saveFile);
+        FileWriter writerObj = new FileWriter(createSaveFile());
         for (Cell[] row : arrCells) {
             String rowString = "";
             for (Cell cell : row) {
@@ -308,11 +314,21 @@ public class GOL {
         writerObj.close();
     }
 
-    /**
-     * 
-     */
-    public void loadSave() throws FileSystemException {
+    public File createSaveFile() {
+        File saveFile = null;
 
+        JFileChooser fileChooser = new JFileChooser();
+        int option = fileChooser.showSaveDialog(null);
+        if (option == JFileChooser.APPROVE_OPTION) {
+            saveFile = changeExtension(fileChooser.getSelectedFile(), ".gol");
+            System.out.println("File Saved as: " + saveFile.getName());
+        } else {
+            System.out.println("Save command canceled");
+        }
+        return saveFile;
+    }
+
+    public File openSaveFile() throws FileSystemException {
         File loadFile = null;
         JFileChooser fileChooser = new JFileChooser();
         int option = fileChooser.showOpenDialog(null);
@@ -327,9 +343,31 @@ public class GOL {
         } else {
             System.out.println("load command canceled");
         }
+        return loadFile;
+    }
+
+    /**
+     * 
+     */
+    public void loadSave() throws FileSystemException {
+
+        // File loadFile = null;
+        // JFileChooser fileChooser = new JFileChooser();
+        // int option = fileChooser.showOpenDialog(null);
+        // if (option == JFileChooser.APPROVE_OPTION) {
+        // if (fileChooser.getSelectedFile().getName().contains(".gol")) {
+        // loadFile = fileChooser.getSelectedFile();
+        // System.out.println("File opened: " + loadFile.getName());
+        // } else {
+        // String fileName = fileChooser.getSelectedFile().getName();
+        // throw new FileSystemException(fileName + " is not a .gol file");
+        // }
+        // } else {
+        // System.out.println("load command canceled");
+        // }
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(loadFile));
+            BufferedReader reader = new BufferedReader(new FileReader(openSaveFile()));
             String line;
             for (Cell[] row : arrCells) {
                 line = reader.readLine();
