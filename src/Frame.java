@@ -5,12 +5,13 @@ import javax.swing.*;
 
 public class Frame extends JFrame {
     public JPanel mainGrid = new JPanel();
-    public JButton save = new JButton("Save");
+    public JButton saveGol = new JButton("Save .gol");
+    public JButton saveJSON = new JButton("Save JSON");
     public JButton load = new JButton("Load");
     public JButton stepButton = new JButton("New Generation");
     public JButton runButton = new JButton("Run");
     public JButton clearButton = new JButton("Clear");
-    public JButton exitButton = new JButton("Exit");
+    public JButton exitButton = new JButton("Regenerate Grid");
     public JSlider framesPerSecond = new JSlider(JSlider.HORIZONTAL, 100, 1500, 800);
     public JPanel fieldPanel = new JPanel(new GridLayout(3, 2));
     public JTextField xField = new JTextField("2");
@@ -48,10 +49,12 @@ public class Frame extends JFrame {
         add(clearButton);
         stepButton.setBounds(830, 202, 300, 70);
         add(stepButton);
-        save.setBounds(830, 278, 147, 70);
-        add(save);
-        load.setBounds(983, 278, 147, 70);
+        saveGol.setBounds(830, 278, 100, 70);
+        add(saveGol);
+        load.setBounds(930, 278, 100, 70);
         add(load);
+        saveJSON.setBounds(1030, 278, 100, 70);
+        add(saveJSON);
 
         exitButton.setBounds(830, 354, 300, 70);
         add(exitButton);

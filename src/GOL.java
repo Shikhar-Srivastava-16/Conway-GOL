@@ -7,7 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.FileSystemException;
 import java.util.ArrayList;
-
 import javax.swing.JFileChooser;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -16,7 +15,6 @@ public class GOL {
 
     public boolean runningState = false;
     public int gridSize, x, y, z;
-
     public Cell[][] arrCells;
     public Frame gameFrame;
     public int frameRate = 750;
@@ -59,6 +57,20 @@ public class GOL {
     }
 
     public void addButtonActions() {
+
+        gameFrame.saveJSON.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    saveAsJson();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+
+        });
+
         gameFrame.stepButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -66,12 +78,12 @@ public class GOL {
             }
         });
 
-        gameFrame.save.addActionListener(new ActionListener() {
+        gameFrame.saveGol.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    saveGame();
+                    saveAsGol();
                 } catch (Exception a) {
                     System.out.println(a.getMessage());
                     System.out.println("Main.addActions(...).new ActionListener() {...}.actionPerformed()");
@@ -130,7 +142,7 @@ public class GOL {
                 try {
                     setX(Integer.parseInt(gameFrame.xField.getText()));
                 } catch (IllegalArgumentException a) {
-                    System.out.println("x should be an integer");
+                    System.out.println("IllegalArg: x should be an integer");
                 }
 
             }
@@ -286,19 +298,9 @@ public class GOL {
      * @throws IOException
      * 
      */
-    public void saveGame() throws IOException {
-        // File saveFile = null;
+    public void saveAsGol() throws IOException {
 
-        // JFileChooser fileChooser = new JFileChooser();
-        // int option = fileChooser.showSaveDialog(null);
-        // if (option == JFileChooser.APPROVE_OPTION) {
-        // saveFile = changeExtension(fileChooser.getSelectedFile(), ".gol");
-        // System.out.println("File Saved as: " + saveFile.getName());
-        // } else {
-        // System.out.println("Save command canceled");
-        // }
-
-        FileWriter writerObj = new FileWriter(createSaveFile());
+        FileWriter writerObj = new FileWriter(createSaveFile(".gol"));
         for (Cell[] row : arrCells) {
             String rowString = "";
             for (Cell cell : row) {
@@ -314,13 +316,19 @@ public class GOL {
         writerObj.close();
     }
 
-    public File createSaveFile() {
+    /**
+     * @param newExtension
+     * @return
+     */
+    public File createSaveFile(String newExtension) {
         File saveFile = null;
-
         JFileChooser fileChooser = new JFileChooser();
         int option = fileChooser.showSaveDialog(null);
         if (option == JFileChooser.APPROVE_OPTION) {
-            saveFile = changeExtension(fileChooser.getSelectedFile(), ".gol");
+            saveFile = fileChooser.getSelectedFile();
+            if (!saveFile.getAbsolutePath().endsWith(newExtension)) {
+                saveFile = new File(saveFile.getAbsolutePath() + newExtension);
+            }
             System.out.println("File Saved as: " + saveFile.getName());
         } else {
             System.out.println("Save command canceled");
@@ -334,13 +342,8 @@ public class GOL {
         JFileChooser fileChooser = new JFileChooser();
         int option = fileChooser.showOpenDialog(null);
         if (option == JFileChooser.APPROVE_OPTION) {
-            if (fileChooser.getSelectedFile().getName().contains(".gol")) {
-                loadFile = fileChooser.getSelectedFile();
-                System.out.println("File opened: " + loadFile.getName());
-            } else {
-                String fileName = fileChooser.getSelectedFile().getName();
-                throw new FileSystemException(fileName + " is not a .gol file");
-            }
+            loadFile = fileChooser.getSelectedFile();
+            System.out.println("File opened: " + loadFile.getName());
         } else {
             System.out.println("load command canceled");
         }
@@ -353,23 +356,59 @@ public class GOL {
     public void loadSave() throws FileSystemException {
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(openSaveFile()));
-            String line;
-            for (Cell[] row : arrCells) {
-                line = reader.readLine();
-                for (int i = 0; i < gridSize; i++) {
-                    if (line.charAt(i) == 'o') {
-                        row[i].setLive(true);
-                    } else if (line.charAt(i) == '.') {
-                        row[i].setLive(false);
+
+            File savedFile = openSaveFile();
+
+            if (savedFile.getName().endsWith(".gol")) {
+                BufferedReader reader = new BufferedReader(new FileReader(savedFile));
+                String line;
+                for (Cell[] row : arrCells) {
+                    line = reader.readLine();
+                    for (int i = 0; i < gridSize; i++) {
+                        if (line.charAt(i) == 'o') {
+                            row[i].setLive(true);
+                        } else if (line.charAt(i) == '.') {
+                            row[i].setLive(false);
+                        }
                     }
                 }
+                reader.close();
+            } else if (savedFile.getName().endsWith(".json")) {
+                loadFromJson(savedFile);
+            } else {
+                System.out.println("Invalid File for loading save");
             }
-            reader.close();
         } catch (IOException e) {
             System.out.println("test");
             System.out.println(e.getMessage());
         }
+    }
+
+    public void saveAsJson() throws IOException {
+        File saveFile = createSaveFile(".json");
+        FileWriter writerObj = new FileWriter(saveFile);
+        System.out.println("save as JSON");
+        writerObj.close();
+        // JSONObject liveRows = new JSONObject();
+        // JSONObject wholeFile = new JSONObject();
+
+        // wholeFile.put("minSize", gridSize);
+
+        // for (int row = 0; row < arrCells.length; row++) {
+        // ArrayList<Integer> thisRow = new ArrayList<>();
+        // for (int cell = 0; cell < arrCells[row].length; cell++) {
+        // if (arrCells[row][cell].isLive()) {
+        // thisRow.add(cell);
+        // }
+        // }
+        // liveRows.put(row, thisRow.toArray());
+        // }
+
+        // wholeFile.put("liveRows", liveRows);
+    }
+
+    public void loadFromJson(File jsonSave) {
+        System.out.println("loading from JSON");
     }
 
     public File changeExtension(File f, String newExtension) {
