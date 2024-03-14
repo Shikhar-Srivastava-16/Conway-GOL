@@ -43,6 +43,7 @@ public class Cell extends JButton {
 
     // contructor
     public Cell() {
+        shouldLive = false;
         setLive(false);
         setBorder(BorderFactory.createEtchedBorder());
         this.addActionListener(new ActionListener() {
@@ -98,9 +99,9 @@ public class Cell extends JButton {
             for (Cell cell : cells) {
                 if (!cell.isShouldLive()) {
                     cell.setLive(false);
-                    cell.setShouldLive(true);
                 } else {
                     cell.setLive(true);
+                    cell.setShouldLive(false);
                 }
             }
         }
