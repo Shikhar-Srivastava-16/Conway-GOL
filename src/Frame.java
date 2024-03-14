@@ -29,11 +29,11 @@ public class Frame extends JFrame {
 
     public void makeGameReady(int gridSize) {
 
-        fieldPanel.add(new JLabel("value of x:"));
+        fieldPanel.add(new JLabel("Death by Contact Starvation:"));
         fieldPanel.add(xField);
-        fieldPanel.add(new JLabel("value of y:"));
+        fieldPanel.add(new JLabel("Death by Overcrowding:"));
         fieldPanel.add(yField);
-        fieldPanel.add(new JLabel("value of z:"));
+        fieldPanel.add(new JLabel("Rebirth:"));
         fieldPanel.add(zField);
         fieldPanel.setBounds(830, 430, 300, 150);
         add(fieldPanel);

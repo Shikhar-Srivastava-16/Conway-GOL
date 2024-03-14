@@ -73,18 +73,13 @@ public class Cell extends JButton {
         }
 
         if (this.isLive()) {
-            if (livingNeighbourCells < x || livingNeighbourCells > y) {
-                this.shouldLive = false;
-            } else {
+            if (!(livingNeighbourCells < x || livingNeighbourCells > y)) {
                 this.shouldLive = true;
             }
         } else {
             if (livingNeighbourCells == z) {
                 this.shouldLive = true;
-            } else {
-                this.shouldLive = false;
             }
-
         }
     }
 
