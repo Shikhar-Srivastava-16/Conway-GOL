@@ -36,6 +36,14 @@ public class GOL {
         this.z = z;
     }
 
+    /**
+     * 
+     * @param x
+     * @param y
+     * @param z x, y, z used for defualt rules in any instance of the game
+     *          each game starts on the menu
+     *          menu button has actionlistener added
+     */
     public GOL(int x, int y, int z) {
 
         this.gridSize = 50;
@@ -57,6 +65,9 @@ public class GOL {
 
     }
 
+    /**
+     * Add all actionlisteners to fields and buttons
+     */
     public void addButtonActions() {
 
         gameFrame.saveJSON.addActionListener(new ActionListener() {
@@ -199,6 +210,11 @@ public class GOL {
         });
     }
 
+    /**
+     * removes menu elements and repaints
+     * adds all game elements by running functions to initialize empty grid of
+     * correct size, change frame to game mode.
+     */
     public void setup() {
         gameFrame.getContentPane().removeAll();
         gameFrame.repaint();
@@ -245,6 +261,10 @@ public class GOL {
 
     }
 
+    /**
+     * Initializes cells at each index of arrCells
+     * Goes through all cells, adds them to the screen
+     */
     public void initializeEmptyGrid() {
         for (int i = 0; i < arrCells.length; i++) {
             for (int j = 0; j < arrCells[i].length; j++) {
@@ -254,6 +274,12 @@ public class GOL {
         }
     }
 
+    /**
+     * 
+     * @param x x-axis index of cell
+     * @param y y-axis index of cell
+     * @return list of all cells adjacent to cell at given index
+     */
     public ArrayList<Cell> getAdjacentCells(int x, int y) {
         ArrayList<Cell> adjacentCells = new ArrayList<>();
 
@@ -287,6 +313,12 @@ public class GOL {
         return adjacentCells;
     }
 
+    /**
+     * changes all cells using the changeCell() method
+     * runs Cell.changeEndTurn() to change all cell states
+     * 
+     * @param x,y,z for rules
+     */
     public void step(int x, int y, int z) {
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++)
@@ -295,6 +327,7 @@ public class GOL {
         Cell.changeEndTurn(arrCells);
     }
 
+    // -------------------------------!!!-----------------------------------
     /**
      * @throws IOException
      * 
@@ -416,8 +449,15 @@ public class GOL {
         // wholeFile.put("liveRows", liveRows);
     }
 
+    // https://crunchify.com/how-to-read-json-object-from-file-in-java/
     public void loadFromJson(File jsonSave) {
-        System.out.println("loading from JSON");
+        // System.out.println("loading from JSON");
+        // JSONParser parser = new JSONParser();
+        // Object obj = parser.parse(new FileReader(jsonSave.getAbsolutePath()));
+        // JSONObject jsonObject = (JSONObject) obj;
+        // JSONArray rowsList = jsonObject.get("liveRows");
+        // Iterator<JSONObject> iterator = rowsList.iterator();
+
     }
 
     public File changeExtension(File f, String newExtension) {
