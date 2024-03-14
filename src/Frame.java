@@ -28,6 +28,11 @@ public class Frame extends JFrame {
         setSize(1170, 860);
     }
 
+    /**
+     * 
+     * @param gridSize is used to initialize grid
+     *                 puts all elements required for the game on screen.
+     */
     public void makeGameReady(int gridSize) {
 
         fieldPanel.add(new JLabel("Death by Solitude:"));
@@ -71,6 +76,9 @@ public class Frame extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Puts all elements needed for the menu on screen
+     */
     public void makeMenuReady() {
 
         JLabel background = new JLabel(new ImageIcon("./assets/others/GOL-opening.png"));

@@ -22,8 +22,10 @@ public class Cell extends JButton {
     public void setLive(boolean live) {
         this.live = live;
         if (this.live)
+            // live cells are black
             this.setBackground(Color.BLACK);
         else
+            // dead cells are white
             this.setBackground(Color.WHITE);
 
     }
@@ -42,6 +44,10 @@ public class Cell extends JButton {
     }
 
     // contructor
+    /**
+     * initially, shouldLive is false and cell is dead.
+     * Each cell has actionlistener
+     */
     public Cell() {
         shouldLive = false;
         setLive(false);

@@ -12,7 +12,10 @@ public class Main {
             e.printStackTrace();
         }
 
+        // running new instance of game of life, by default uses (2,3,3) as rules
         gol = new GOL(2, 3, 3);
+
+        // add action listeners to buttons and fields on screen.
         gol.addButtonActions();
     }
 }

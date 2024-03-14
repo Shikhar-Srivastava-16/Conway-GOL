@@ -19,6 +19,7 @@ public class GOL {
     public Frame gameFrame;
     public int frameRate = 750;
 
+    // setters
     public void setGridSize(int gridSize) {
         this.gridSize = gridSize;
     }
