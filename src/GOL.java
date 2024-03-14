@@ -364,12 +364,20 @@ public class GOL {
                 String line;
                 for (Cell[] row : arrCells) {
                     line = reader.readLine();
+                    if (line == null) {
+                        break;
+                    }
                     for (int i = 0; i < gridSize; i++) {
-                        if (line.charAt(i) == 'o') {
-                            row[i].setLive(true);
-                        } else if (line.charAt(i) == '.') {
-                            row[i].setLive(false);
+                        try {
+                            if (line.charAt(i) == 'o') {
+                                row[i].setLive(true);
+                            } else if (line.charAt(i) == '.') {
+                                row[i].setLive(false);
+                            }
+                        } catch (StringIndexOutOfBoundsException e) {
+                            break;
                         }
+
                     }
                 }
                 reader.close();
