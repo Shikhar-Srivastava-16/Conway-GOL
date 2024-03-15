@@ -11,6 +11,8 @@ import javax.swing.JFileChooser;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import org.json.JSONObject;
+
 public class GOL {
 
     public boolean runningState = false;
@@ -428,25 +430,39 @@ public class GOL {
 
     public void saveAsJson() throws IOException {
         File saveFile = createSaveFile(".json");
-        FileWriter writerObj = new FileWriter(saveFile);
-        System.out.println("save as JSON");
-        writerObj.close();
-        // JSONObject liveRows = new JSONObject();
-        // JSONObject wholeFile = new JSONObject();
+        FileWriter fileWriter = new FileWriter(saveFile);
+        JSONObject jsonObject = new JSONObject();
 
-        // wholeFile.put("minSize", gridSize);
+        int n = arrCells.length;
 
-        // for (int row = 0; row < arrCells.length; row++) {
-        // ArrayList<Integer> thisRow = new ArrayList<>();
-        // for (int cell = 0; cell < arrCells[row].length; cell++) {
-        // if (arrCells[row][cell].isLive()) {
-        // thisRow.add(cell);
-        // }
-        // }
-        // liveRows.put(row, thisRow.toArray());
-        // }
+        jsonObject.put("minRows", n);
 
-        // wholeFile.put("liveRows", liveRows);
+        JSONObject rows = new JSONObject();
+      
+        for (int rowIndex = 0; rowIndex < arrCells.length; rowIndex++) {
+
+            ArrayList<Integer> thisRow = new ArrayList<>();
+            for (int i = 0; i < arrCells[rowIndex].length; i++) {
+                if(arrCells[rowIndex][i].isLive()) {
+                thisRow.add(i);
+            }
+        }
+
+        int[] arrayForRow = thisRow.stream().mapToInt(i -> i).toArray();
+
+        if (arrayForRow.length != 0 ) {
+            rows.put(String.valueOf(rowIndex), arrayForRow);
+        }
+    }
+
+        jsonObject.put("rows", rows);
+        try {
+            fileWriter.write(jsonObject.toString());
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("JSON file created: "+jsonObject);
     }
 
     // https://crunchify.com/how-to-read-json-object-from-file-in-java/
