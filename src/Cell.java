@@ -68,6 +68,8 @@ public class Cell extends JButton {
      * @param x            A live cell with fewer than x live neighbours dies
      * @param y            A live cell with more than y live neighbours dies
      * @param z            A dead cell with exactly z live neighbours becomes live
+     *                     Method will checks how many neigbouring cells are alive
+     *                     and will set the state according to the rules
      */
     public void changeCell(ArrayList<Cell> listAdjCells, int x, int y, int z) {
 
@@ -92,8 +94,10 @@ public class Cell extends JButton {
     /**
      *
      * @param map A 2D cell array which represents the grid/map for the game
-     * method itterates through all the cells and checks its should live status
-     * if it is false it will set the cells live status to false and its should live to true and vice verca
+     *            method itterates through all the cells and checks its should live
+     *            status
+     *            if it is false it will set the cells live status to false and its
+     *            should live to true and vice verca
      */
     public static void changeEndTurn(Cell[][] map) {
         for (Cell[] cells : map) {
