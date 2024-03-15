@@ -37,7 +37,6 @@ public class Frame extends JFrame {
      *                 puts all elements required for the game on screen.
      */
     public void makeGameReady(int gridSize) {
-
         fieldPanel.add(new JLabel("Death by Solitude:"));
         fieldPanel.add(xField);
         fieldPanel.add(new JLabel("Death by Overcrowding:"));

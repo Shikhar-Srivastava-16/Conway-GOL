@@ -1,6 +1,8 @@
 #!/bin/bash
 
+
 cd ./src/
+
 export CLASSPATH=$CLASSPATH:./../lib/javax.json-1.0.jar:./../lib/json-java-20231013.jar
 
 rm -f *.class
