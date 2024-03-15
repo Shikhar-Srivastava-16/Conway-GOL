@@ -4,6 +4,7 @@ import java.util.Hashtable;
 import javax.swing.*;
 
 public class Frame extends JFrame {
+    // fields
     public JPanel mainGrid = new JPanel();
     public JButton saveGol = new JButton("Save .gol");
     public JButton saveJSON = new JButton("Save JSON");
@@ -20,6 +21,8 @@ public class Frame extends JFrame {
     public JButton starter = new JButton("Start Game");
     public JTextField gridField = new JTextField("50");
 
+    // constructor that will create a new frame and sets the size as well as other
+    // attributes like resizable to false as well as the default close opperation
     public Frame() {
         setResizable(false);
         setLayout(null);

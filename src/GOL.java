@@ -513,6 +513,7 @@ public class GOL {
         }
     }
 
+    // https://stackoverflow.com/questions/12209801/how-to-change-file-extension-at-runtime-in-java
     public File changeExtension(File f, String newExtension) {
         if (f.getAbsolutePath().contains(".")) {
             int i = f.getAbsolutePath().lastIndexOf('.');
