@@ -82,6 +82,7 @@ public class Frame extends JFrame {
      * Puts all elements needed for the menu on screen
      */
     public void makeMenuReady() {
+
         JLabel background = new JLabel(new ImageIcon("./../assets/others/werweGOL-opening.png"));
         background.setBounds(0, 0, 1170, 1100);
         add(background);
