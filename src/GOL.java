@@ -368,7 +368,6 @@ public class GOL {
         Cell.changeEndTurn(arrCells);
     }
 
-    // -------------------------------!!!-----------------------------------
     /**
      * @throws IOException
      *                     method will create a new .gol file and will write the
