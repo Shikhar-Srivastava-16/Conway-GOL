@@ -342,21 +342,24 @@ public class GOL {
      * 
      */
     public void saveAsGol() throws IOException {
+        File golSaveFile = createSaveFile(".gol");
 
-        FileWriter writerObj = new FileWriter(createSaveFile(".gol"));
-        for (Cell[] row : arrCells) {
-            String rowString = "";
-            for (Cell cell : row) {
-                // for live cell
-                if (cell.isLive()) {
-                    rowString = rowString + "o";
-                } else {
-                    rowString = rowString + ".";
+        if (golSaveFile != null){
+            FileWriter writerObj = new FileWriter(golSaveFile);
+            for (Cell[] row : arrCells) {
+                String rowString = "";
+                for (Cell cell : row) {
+                    // for live cell
+                    if (cell.isLive()) {
+                        rowString = rowString + "o";
+                    } else {
+                        rowString = rowString + ".";
+                    }
                 }
+                writerObj.write(rowString + "\n");
             }
-            writerObj.write(rowString + "\n");
+            writerObj.close();
         }
-        writerObj.close();
     }
 
     /**
@@ -399,77 +402,81 @@ public class GOL {
     public void loadSave() throws FileSystemException {
 
         try {
-
             File savedFile = openSaveFile();
-
-            if (savedFile.getName().endsWith(".gol")) {
-                BufferedReader reader = new BufferedReader(new FileReader(savedFile));
-                String line;
-                for (Cell[] row : arrCells) {
-                    line = reader.readLine();
-                    if (line == null) {
-                        break;
-                    }
-                    for (int i = 0; i < gridSize; i++) {
-                        try {
-                            if (line.charAt(i) == 'o') {
-                                row[i].setLive(true);
-                            } else if (line.charAt(i) == '.') {
-                                row[i].setLive(false);
-                            }
-                        } catch (StringIndexOutOfBoundsException e) {
+            if (savedFile != null){
+                if (savedFile.getName().endsWith(".gol")) {
+                    BufferedReader reader = new BufferedReader(new FileReader(savedFile));
+                    String line;
+                    for (Cell[] row : arrCells) {
+                        line = reader.readLine();
+                        if (line == null) {
                             break;
                         }
+                        for (int i = 0; i < gridSize; i++) {
+                            try {
+                                if (line.charAt(i) == 'o') {
+                                    row[i].setLive(true);
+                                } else if (line.charAt(i) == '.') {
+                                    row[i].setLive(false);
+                                }
+                            } catch (StringIndexOutOfBoundsException e) {
+                                break;
+                            }
 
+                        }
                     }
+                    reader.close();
+                } else if (savedFile.getName().endsWith(".json")) {
+                    loadFromJson(savedFile);
+                } else {
+                    System.out.println("Invalid File for loading save");
                 }
-                reader.close();
-            } else if (savedFile.getName().endsWith(".json")) {
-                loadFromJson(savedFile);
-            } else {
-                System.out.println("Invalid File for loading save");
             }
-        } catch (IOException e) {
+        }catch (IOException e) {
             System.out.println("test");
             System.out.println(e.getMessage());
         }
+        
+    
     }
 
     public void saveAsJson() throws IOException {
         File saveFile = createSaveFile(".json");
-        FileWriter fileWriter = new FileWriter(saveFile);
-        JSONObject jsonObject = new JSONObject();
+        if (saveFile != null) {
+            FileWriter fileWriter = new FileWriter(saveFile);
+            JSONObject jsonObject = new JSONObject();
 
-        int n = arrCells.length;
+            int n = arrCells.length;
 
-        jsonObject.put("minRows", n);
+            jsonObject.put("minRows", n);
 
-        JSONObject rows = new JSONObject();
-      
-        for (int rowIndex = 0; rowIndex < arrCells.length; rowIndex++) {
+            JSONObject rows = new JSONObject();
 
-            ArrayList<Integer> thisRow = new ArrayList<>();
-            for (int i = 0; i < arrCells[rowIndex].length; i++) {
-                if(arrCells[rowIndex][i].isLive()) {
-                thisRow.add(i);
+            for (int rowIndex = 0; rowIndex < arrCells.length; rowIndex++) {
+
+                ArrayList<Integer> thisRow = new ArrayList<>();
+                for (int i = 0; i < arrCells[rowIndex].length; i++) {
+                    if (arrCells[rowIndex][i].isLive()) {
+                        thisRow.add(i);
+                    }
+                }
+
+                int[] arrayForRow = thisRow.stream().mapToInt(i -> i).toArray();
+
+                if (arrayForRow.length != 0) {
+                    rows.put(String.valueOf(rowIndex), arrayForRow);
+                }
             }
-        }
 
-        int[] arrayForRow = thisRow.stream().mapToInt(i -> i).toArray();
-
-        if (arrayForRow.length != 0 ) {
-            rows.put(String.valueOf(rowIndex), arrayForRow);
+            jsonObject.put("rows", rows);
+            try {
+                fileWriter.write(jsonObject.toString());
+                fileWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println("JSON file created: " + jsonObject);
         }
-    }
-
-        jsonObject.put("rows", rows);
-        try {
-            fileWriter.write(jsonObject.toString());
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("JSON file created: "+jsonObject);
     }
 
     // https://crunchify.com/how-to-read-json-object-from-file-in-java/
@@ -480,11 +487,15 @@ public class GOL {
         JsonObject rowObject = myObj.getJsonObject("rows");
 
         for (int i = 0; i < arrCells.length; i++) {
-            JsonArray arrThisRow = rowObject.getJsonArray(String.valueOf(i));
-            if(arrThisRow != null){
-                for (JsonValue jsonValue : arrThisRow) {
-                    arrCells[i][Integer.valueOf(jsonValue.toString())].setLive(true);
+            try {
+                JsonArray arrThisRow = rowObject.getJsonArray(String.valueOf(i));
+                if (arrThisRow != null) {
+                    for (JsonValue jsonValue : arrThisRow) {
+                        arrCells[i][Integer.valueOf(jsonValue.toString())].setLive(true);
+                    }
                 }
+            } catch (IndexOutOfBoundsException e) {
+                break;
             }
         }
 
