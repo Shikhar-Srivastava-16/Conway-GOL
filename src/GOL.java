@@ -22,7 +22,7 @@ import javax.swing.event.ChangeListener;
 import org.json.JSONObject;
 
 public class GOL {
-
+    // fields
     public boolean runningState = false;
     public int gridSize, x, y, z;
     public Cell[][] arrCells;
@@ -54,6 +54,8 @@ public class GOL {
      *          each game starts on the menu
      *          menu button has actionlistener added
      */
+    // constructor for GOL class which initialises the grid size and x, y and z
+    // values. It also creates a new gameframe which will display the main menu
     public GOL(int x, int y, int z) {
 
         this.gridSize = 50;
@@ -64,8 +66,9 @@ public class GOL {
         gameFrame = new Frame();
         // gameFrame.makeGameReady(gridSize);
         gameFrame.makeMenuReady();
+        // adds an actionlistener to the start game button which will call the setup()
+        // method when clicked
         gameFrame.starter.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 setup();
@@ -81,7 +84,6 @@ public class GOL {
     public void addButtonActions() {
 
         gameFrame.saveJSON.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -90,7 +92,6 @@ public class GOL {
                     e1.printStackTrace();
                 }
             }
-
         });
 
         gameFrame.stepButton.addActionListener(new ActionListener() {
@@ -111,7 +112,6 @@ public class GOL {
                     System.out.println("Main.addActions(...).new ActionListener() {...}.actionPerformed()");
                 }
             }
-
         });
 
         gameFrame.runButton.addActionListener(new ActionListener() {
@@ -124,25 +124,20 @@ public class GOL {
                     runningState = false;
                     gameFrame.runButton.setText("Run");
                 }
-
                 Thread task = new Thread(new ReasourceIntensiveTask());
                 task.start();
-
             }
         });
 
         gameFrame.load.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 try {
                     loadSave();
                 } catch (Exception a) {
                     System.out.println(a.getMessage());
                 }
-
             }
-
         });
 
         gameFrame.clearButton.addActionListener(new ActionListener() {
@@ -154,28 +149,23 @@ public class GOL {
                     }
                 }
             }
-
         });
 
         gameFrame.xField.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    if (checkIfValidXYZ(Integer.parseInt(gameFrame.xField.getText()))){
+                    if (checkIfValidXYZ(Integer.parseInt(gameFrame.xField.getText()))) {
                         setX(Integer.parseInt(gameFrame.xField.getText()));
                     } else {
                         System.out.println("Enter an integer between 0 and 8");
                         gameFrame.xField.setText(Integer.toString(x));
                     }
-                    
                 } catch (IllegalArgumentException a) {
                     System.out.println("IllegalArg: x should be an integer");
                     gameFrame.xField.setText(Integer.toString(x));
                 }
-
             }
-
         });
 
         gameFrame.yField.addActionListener(new ActionListener() {
@@ -183,53 +173,43 @@ public class GOL {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    if (checkIfValidXYZ(Integer.parseInt(gameFrame.yField.getText()))){
+                    if (checkIfValidXYZ(Integer.parseInt(gameFrame.yField.getText()))) {
                         setY(Integer.parseInt(gameFrame.yField.getText()));
                     } else {
                         System.out.println("Enter an integer between 0 and 8");
                         gameFrame.yField.setText(Integer.toString(y));
                     }
-                    
                 } catch (IllegalArgumentException a) {
                     System.out.println("y should be an integer");
                     gameFrame.yField.setText(Integer.toString(y));
                 }
-
             }
-
         });
 
         gameFrame.zField.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    if (checkIfValidXYZ(Integer.parseInt(gameFrame.zField.getText()))){
+                    if (checkIfValidXYZ(Integer.parseInt(gameFrame.zField.getText()))) {
                         setZ(Integer.parseInt(gameFrame.zField.getText()));
                     } else {
                         System.out.println("Enter an integer between 0 and 8");
                         gameFrame.zField.setText(Integer.toString(z));
                     }
-                    
                 } catch (IllegalArgumentException a) {
                     System.out.println("z should be an integer");
                     gameFrame.zField.setText(Integer.toString(z));
                 }
-
             }
-
         });
 
         gameFrame.exitButton.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 if (runningState) {
                     runningState = false;
                     gameFrame.runButton.setText("Run");
                 }
-
                 gameFrame.getContentPane().removeAll();
                 gameFrame.repaint();
                 gameFrame.mainGrid.removeAll();
@@ -237,13 +217,12 @@ public class GOL {
                 arrCells = null;
                 gameFrame.makeMenuReady();
             }
-
         });
     }
 
-    public boolean checkIfValidXYZ(int inputedValue){
-        int[] validValues = {0, 1, 2, 3, 4, 5, 6, 7, 8};
-        for (int validValue : validValues){
+    public boolean checkIfValidXYZ(int inputedValue) {
+        int[] validValues = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
+        for (int validValue : validValues) {
             if (inputedValue == validValue) {
                 return true;
             }
@@ -280,7 +259,6 @@ public class GOL {
                 public void stateChanged(ChangeEvent e) {
                     frameRate = gameFrame.framesPerSecond.getValue();
                 }
-
             });
         } catch (NumberFormatException e) {
             System.out.println("not a number");
@@ -291,13 +269,12 @@ public class GOL {
         } catch (NegativeArraySizeException e) {
             System.out.println("cannot have a negative grid size");
             resetMenu();
-        }catch (InvalidAttributeValueException e) {
+        } catch (InvalidAttributeValueException e) {
             System.out.println("please enter a grid size between 3 and 100");
             resetMenu();
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public void resetMenu() {
@@ -384,7 +361,7 @@ public class GOL {
     public void saveAsGol() throws IOException {
         File golSaveFile = createSaveFile(".gol");
 
-        if (golSaveFile != null){
+        if (golSaveFile != null) {
             FileWriter writerObj = new FileWriter(golSaveFile);
             for (Cell[] row : arrCells) {
                 String rowString = "";
@@ -440,10 +417,9 @@ public class GOL {
      * 
      */
     public void loadSave() throws FileSystemException {
-
         try {
             File savedFile = openSaveFile();
-            if (savedFile != null){
+            if (savedFile != null) {
                 if (savedFile.getName().endsWith(".gol")) {
                     BufferedReader reader = new BufferedReader(new FileReader(savedFile));
                     String line;
@@ -462,7 +438,6 @@ public class GOL {
                             } catch (StringIndexOutOfBoundsException e) {
                                 break;
                             }
-
                         }
                     }
                     reader.close();
@@ -472,12 +447,10 @@ public class GOL {
                     System.out.println("Invalid File for loading save");
                 }
             }
-        }catch (IOException e) {
+        } catch (IOException e) {
             System.out.println("test");
             System.out.println(e.getMessage());
         }
-        
-    
     }
 
     public void saveAsJson() throws IOException {
@@ -538,7 +511,6 @@ public class GOL {
                 break;
             }
         }
-
     }
 
     public File changeExtension(File f, String newExtension) {
@@ -552,7 +524,6 @@ public class GOL {
     }
 
     public class ReasourceIntensiveTask implements Runnable {
-
         @Override
         public void run() {
             while (runningState) {

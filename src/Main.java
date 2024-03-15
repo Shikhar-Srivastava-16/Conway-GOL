@@ -7,6 +7,7 @@ public class Main {
     public static GOL gol;
 
     public static void main(String[] args) {
+        // try catch where the look and feel is applied to the ui manager
         try {
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         } catch (Exception e) {
