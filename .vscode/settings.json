@@ -1,7 +1,7 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "assets/lib/javax.json-1.0.jar",
-        "assets/lib/json-java-20231013.jar"
+        "lib/javax.json-1.0.jar",
+        "lib/json-java-20231013.jar"
     ]
 }

@@ -161,7 +161,12 @@ public class GOL {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    setX(Integer.parseInt(gameFrame.xField.getText()));
+                    if (checkIfValidXYZ(Integer.parseInt(gameFrame.xField.getText()))){
+                        setX(Integer.parseInt(gameFrame.xField.getText()));
+                    } else {
+                        System.out.println("Enter an integer between 0 and 8");
+                    }
+                    
                 } catch (IllegalArgumentException a) {
                     System.out.println("IllegalArg: x should be an integer");
                 }
@@ -175,7 +180,12 @@ public class GOL {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    setY(Integer.parseInt(gameFrame.yField.getText()));
+                    if (checkIfValidXYZ(Integer.parseInt(gameFrame.yField.getText()))){
+                        setY(Integer.parseInt(gameFrame.yField.getText()));
+                    } else {
+                        System.out.println("Enter an integer between 0 and 8");
+                    }
+                    
                 } catch (IllegalArgumentException a) {
                     System.out.println("y should be an integer");
                 }
@@ -189,7 +199,12 @@ public class GOL {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    setZ(Integer.parseInt(gameFrame.zField.getText()));
+                    if (checkIfValidXYZ(Integer.parseInt(gameFrame.zField.getText()))){
+                        setZ(Integer.parseInt(gameFrame.zField.getText()));
+                    } else {
+                        System.out.println("Enter an integer between 0 and 8");
+                    }
+                    
                 } catch (IllegalArgumentException a) {
                     System.out.println("z should be an integer");
                 }
@@ -217,6 +232,16 @@ public class GOL {
             }
 
         });
+    }
+
+    public boolean checkIfValidXYZ(int inputedValue){
+        int[] validValues = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+        for (int validValue : validValues){
+            if (inputedValue == validValue) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -264,7 +289,15 @@ public class GOL {
             gameFrame.fieldPanel.removeAll();
             arrCells = null;
             gameFrame.makeMenuReady();
-        } catch (Exception e) {
+        } catch (NegativeArraySizeException e) {
+            System.out.println("cannot have a negative grid size");
+            gameFrame.getContentPane().removeAll();
+            gameFrame.repaint();
+            gameFrame.mainGrid.removeAll();
+            gameFrame.fieldPanel.removeAll();
+            arrCells = null;
+            gameFrame.makeMenuReady();
+        }catch (Exception e) {
             e.printStackTrace();
         }
 

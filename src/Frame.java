@@ -81,7 +81,7 @@ public class Frame extends JFrame {
      */
     public void makeMenuReady() {
 
-        JLabel background = new JLabel(new ImageIcon("./assets/others/GOL-opening.png"));
+        JLabel background = new JLabel(new ImageIcon("../assets/others/GOL-opening.png"));
         background.setBounds(0, 0, 1170, 1100);
         add(background);
 
