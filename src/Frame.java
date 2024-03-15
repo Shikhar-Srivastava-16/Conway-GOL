@@ -37,7 +37,6 @@ public class Frame extends JFrame {
      *                 puts all elements required for the game on screen.
      */
     public void makeGameReady(int gridSize) {
-
         fieldPanel.add(new JLabel("Death by Solitude:"));
         fieldPanel.add(xField);
         fieldPanel.add(new JLabel("Death by Overcrowding:"));
@@ -83,7 +82,6 @@ public class Frame extends JFrame {
      * Puts all elements needed for the menu on screen
      */
     public void makeMenuReady() {
-
         JLabel background = new JLabel(new ImageIcon("../assets/others/GOL-opening.png"));
         background.setBounds(0, 0, 1170, 1100);
         add(background);
