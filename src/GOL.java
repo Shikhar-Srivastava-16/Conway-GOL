@@ -82,7 +82,7 @@ public class GOL {
      * Add all actionlisteners to fields and buttons
      */
     public void addButtonActions() {
-
+        // calls the saveAsJson() method when the saveJSON button is clicked
         gameFrame.saveJSON.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -93,16 +93,15 @@ public class GOL {
                 }
             }
         });
-
+        // calls the step method when the stepButton/new generation button is clicked
         gameFrame.stepButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 step(x, y, z);
             }
         });
-
+        // calls the saveAsGol() method when the saveGol button is clicked
         gameFrame.saveGol.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -113,22 +112,28 @@ public class GOL {
                 }
             }
         });
-
+        // when the run button is clicked the method will check if the running state
+        // boolean is true or false
+        // if true it will set running state to false and set the button text to run
+        // if false it will set running state to true and the button text to stop as
+        // well as create a new thread with a new loopedStepTask object as an
+        // argument and will then run the task
         gameFrame.runButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (runningState == false) {
                     runningState = true;
                     gameFrame.runButton.setText("Stop");
+                    Thread task = new Thread(new loopedStepTask());
+                    task.start();
                 } else {
                     runningState = false;
                     gameFrame.runButton.setText("Run");
                 }
-                Thread task = new Thread(new ReasourceIntensiveTask());
-                task.start();
+
             }
         });
-
+        // calls the loadSave() method when the load button is clicked
         gameFrame.load.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -139,7 +144,8 @@ public class GOL {
                 }
             }
         });
-
+        // iterates through the cell array and sets all the cells to dead when the clear
+        // button is clicked
         gameFrame.clearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -150,7 +156,8 @@ public class GOL {
                 }
             }
         });
-
+        // will detect when a new integer is input into the x field and will set the x
+        // attribute accordingly provided it's valid
         gameFrame.xField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -167,9 +174,9 @@ public class GOL {
                 }
             }
         });
-
+        // will detect when a new integer is input into the y field and will set the y
+        // attribute accordingly provided it's valid
         gameFrame.yField.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -185,7 +192,8 @@ public class GOL {
                 }
             }
         });
-
+        // will detect when a new integer is input into the z field and will set the z
+        // attribute accordingly provided it's valid
         gameFrame.zField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -202,7 +210,10 @@ public class GOL {
                 }
             }
         });
-
+        // when the exit button is pressed the running state if not already is set to
+        // false and the run button text is set to run. Then everything is removed from
+        // the frame and the cell array is set to null and then the makeMenuReady()
+        // method is called
         gameFrame.exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -220,6 +231,8 @@ public class GOL {
         });
     }
 
+    // checks if the inputed x, y or z values are between 0 to 8 and will return a
+    // boolean
     public boolean checkIfValidXYZ(int inputedValue) {
         int[] validValues = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
         for (int validValue : validValues) {
@@ -277,6 +290,8 @@ public class GOL {
         }
     }
 
+    // method that will remove everything from the frame and recreate the menu with
+    // grid size set to 50
     public void resetMenu() {
         gameFrame.getContentPane().removeAll();
         gameFrame.repaint();
@@ -356,7 +371,8 @@ public class GOL {
     // -------------------------------!!!-----------------------------------
     /**
      * @throws IOException
-     * 
+     *                     method will create a new .gol file and will write the
+     *                     current state of the grid to it
      */
     public void saveAsGol() throws IOException {
         File golSaveFile = createSaveFile(".gol");
@@ -382,6 +398,8 @@ public class GOL {
     /**
      * @param newExtension
      * @return
+     *         creates a pop up window asking the user where they would like to
+     *         create the save file and will return said file
      */
     public File createSaveFile(String newExtension) {
         File saveFile = null;
@@ -399,9 +417,14 @@ public class GOL {
         return saveFile;
     }
 
+    /**
+     * @throws FileSystemException
+     *                             creates a pop up window asking the user which
+     *                             file the would like to load and
+     *                             will return the file
+     */
     public File openSaveFile() throws FileSystemException {
         File loadFile = null;
-
         JFileChooser fileChooser = new JFileChooser();
         int option = fileChooser.showOpenDialog(null);
         if (option == JFileChooser.APPROVE_OPTION) {
@@ -414,7 +437,10 @@ public class GOL {
     }
 
     /**
-     * 
+     * @throws FileSystemException
+     *                             if a load file is selected this method will read
+     *                             the file and set the state of all cells
+     *                             accordingly
      */
     public void loadSave() throws FileSystemException {
         try {
@@ -453,6 +479,11 @@ public class GOL {
         }
     }
 
+    /**
+     * @throws IOException
+     *                     method will create a new .json file and will write the
+     *                     current state of the grid to it
+     */
     public void saveAsJson() throws IOException {
         File saveFile = createSaveFile(".json");
         if (saveFile != null) {
@@ -492,7 +523,16 @@ public class GOL {
         }
     }
 
+    // the code below references code from a blog posted on
     // https://crunchify.com/how-to-read-json-object-from-file-in-java/
+    // (last accessed 15/03/2024)
+    // BEGIN referenced code
+    /**
+     * 
+     * @throws FileNotFoundException
+     *                               method reads the json file selected by the user
+     *                               and set the grid accordingly
+     */
     public void loadFromJson(File jsonSave) throws FileNotFoundException {
         System.out.println("loading from JSON");
 
@@ -512,19 +552,12 @@ public class GOL {
             }
         }
     }
+    // END referenced code
 
-    // https://stackoverflow.com/questions/12209801/how-to-change-file-extension-at-runtime-in-java
-    public File changeExtension(File f, String newExtension) {
-        if (f.getAbsolutePath().contains(".")) {
-            int i = f.getAbsolutePath().lastIndexOf('.');
-            String name = f.getAbsolutePath().substring(0, i);
-            return new File(name + newExtension);
-        } else {
-            return new File(f.getAbsolutePath() + ".gol");
-        }
-    }
-
-    public class ReasourceIntensiveTask implements Runnable {
+    // class that implements runnable with an overriden run method which will run
+    // the step() method followed by delay depending on the framerate in an infinite
+    // loop while the runningState boolean is true
+    public class loopedStepTask implements Runnable {
         @Override
         public void run() {
             while (runningState) {
