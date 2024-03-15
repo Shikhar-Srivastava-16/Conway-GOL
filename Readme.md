@@ -4,6 +4,8 @@ In terminal, change into the src directory and then use the following commands:
 javac -cp .:../lib/* *.java
 java -cp .:../lib/* Main
 
+Running on linux is preferable. On linux, going to the CS1006-P2 directory and running the command 'bash ./lib/build-run-all' will run the program
+
 Once the program's started, there will be a textfield representing the grid size you can enter any non zero, positive integer to change the grid size.
 When ready click Start Game to initialise the grid and start the game.
 
@@ -19,5 +21,3 @@ There are two save buttons one will save a .gol file and the other will save a .
 There is a load button to load a previous .gol or .json save
 There is a regenerate grid button which will go back to the main menu so grid size can be changed
 There are three text fields in which any  
-
-
