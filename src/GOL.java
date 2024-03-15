@@ -14,6 +14,7 @@ import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
+import javax.naming.directory.InvalidAttributeValueException;
 import javax.swing.JFileChooser;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -165,10 +166,12 @@ public class GOL {
                         setX(Integer.parseInt(gameFrame.xField.getText()));
                     } else {
                         System.out.println("Enter an integer between 0 and 8");
+                        gameFrame.xField.setText(Integer.toString(x));
                     }
                     
                 } catch (IllegalArgumentException a) {
                     System.out.println("IllegalArg: x should be an integer");
+                    gameFrame.xField.setText(Integer.toString(x));
                 }
 
             }
@@ -184,10 +187,12 @@ public class GOL {
                         setY(Integer.parseInt(gameFrame.yField.getText()));
                     } else {
                         System.out.println("Enter an integer between 0 and 8");
+                        gameFrame.yField.setText(Integer.toString(y));
                     }
                     
                 } catch (IllegalArgumentException a) {
                     System.out.println("y should be an integer");
+                    gameFrame.yField.setText(Integer.toString(y));
                 }
 
             }
@@ -203,10 +208,12 @@ public class GOL {
                         setZ(Integer.parseInt(gameFrame.zField.getText()));
                     } else {
                         System.out.println("Enter an integer between 0 and 8");
+                        gameFrame.zField.setText(Integer.toString(z));
                     }
                     
                 } catch (IllegalArgumentException a) {
                     System.out.println("z should be an integer");
+                    gameFrame.zField.setText(Integer.toString(z));
                 }
 
             }
@@ -255,6 +262,9 @@ public class GOL {
 
         try {
             int size = Integer.parseInt(gameFrame.gridField.getText());
+            if (size > 100 || size < 3) {
+                throw new InvalidAttributeValueException();
+            }
             setGridSize(size);
             arrCells = new Cell[gridSize][gridSize];
             gameFrame.makeGameReady(size);
@@ -274,33 +284,30 @@ public class GOL {
             });
         } catch (NumberFormatException e) {
             System.out.println("not a number");
-            gameFrame.getContentPane().removeAll();
-            gameFrame.repaint();
-            gameFrame.mainGrid.removeAll();
-            gameFrame.fieldPanel.removeAll();
-            arrCells = null;
-            gameFrame.makeMenuReady();
-
+            resetMenu();
         } catch (IllegalArgumentException e) {
             System.out.println("0 not a valid grid size");
-            gameFrame.getContentPane().removeAll();
-            gameFrame.repaint();
-            gameFrame.mainGrid.removeAll();
-            gameFrame.fieldPanel.removeAll();
-            arrCells = null;
-            gameFrame.makeMenuReady();
+            resetMenu();
         } catch (NegativeArraySizeException e) {
             System.out.println("cannot have a negative grid size");
-            gameFrame.getContentPane().removeAll();
-            gameFrame.repaint();
-            gameFrame.mainGrid.removeAll();
-            gameFrame.fieldPanel.removeAll();
-            arrCells = null;
-            gameFrame.makeMenuReady();
+            resetMenu();
+        }catch (InvalidAttributeValueException e) {
+            System.out.println("please enter a grid size between 3 and 100");
+            resetMenu();
         }catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+
+    public void resetMenu() {
+        gameFrame.getContentPane().removeAll();
+        gameFrame.repaint();
+        gameFrame.mainGrid.removeAll();
+        gameFrame.fieldPanel.removeAll();
+        arrCells = null;
+        gameFrame.makeMenuReady();
+        gameFrame.gridField.setText(50 + "");
     }
 
     /**
