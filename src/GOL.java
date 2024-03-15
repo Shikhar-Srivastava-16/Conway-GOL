@@ -53,9 +53,10 @@ public class GOL {
      * @param z x, y, z used for defualt rules in any instance of the game
      *          each game starts on the menu
      *          menu button has actionlistener added
+     *          constructor for GOL class which initialises the grid size and x, y
+     *          and z
+     *          It also creates a new gameframe which will display the main menu
      */
-    // constructor for GOL class which initialises the grid size and x, y and z
-    // values. It also creates a new gameframe which will display the main menu
     public GOL(int x, int y, int z) {
 
         this.gridSize = 50;
@@ -64,10 +65,8 @@ public class GOL {
         this.z = z;
 
         gameFrame = new Frame();
-        // gameFrame.makeGameReady(gridSize);
         gameFrame.makeMenuReady();
-        // adds an actionlistener to the start game button which will call the setup()
-        // method when clicked
+        // adds an actionlistener to the start game button which will call setup()
         gameFrame.starter.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -112,12 +111,15 @@ public class GOL {
                 }
             }
         });
-        // when the run button is clicked the method will check if the running state
-        // boolean is true or false
-        // if true it will set running state to false and set the button text to run
-        // if false it will set running state to true and the button text to stop as
-        // well as create a new thread with a new loopedStepTask object as an
-        // argument and will then run the task
+        /*
+         * 
+         * when the run button is clicked the method will check if the running state
+         * boolean is true or false
+         * if true it will set running state to false and set the button text to run
+         * if false it will set running state to true and the button text to stop as
+         * well as create a new thread with a new loopedStepTask object as an
+         * argument and will then run the task
+         */
         gameFrame.runButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -144,8 +146,11 @@ public class GOL {
                 }
             }
         });
-        // iterates through the cell array and sets all the cells to dead when the clear
-        // button is clicked
+        /*
+         * 
+         * iterates through the cell array and sets all the cells to dead when the clear
+         * button is clicked
+         */
         gameFrame.clearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -156,8 +161,7 @@ public class GOL {
                 }
             }
         });
-        // will detect when a new integer is input into the x field and will set the x
-        // attribute accordingly provided it's valid
+        // will detect when a new integer is input into the x field and will set x
         gameFrame.xField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -174,8 +178,7 @@ public class GOL {
                 }
             }
         });
-        // will detect when a new integer is input into the y field and will set the y
-        // attribute accordingly provided it's valid
+        // will detect when a new integer is input into the y field and will set y
         gameFrame.yField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -192,8 +195,7 @@ public class GOL {
                 }
             }
         });
-        // will detect when a new integer is input into the z field and will set the z
-        // attribute accordingly provided it's valid
+        // will detect when a new integer is input into the z field and will set z
         gameFrame.zField.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -210,10 +212,13 @@ public class GOL {
                 }
             }
         });
-        // when the exit button is pressed the running state if not already is set to
-        // false and the run button text is set to run. Then everything is removed from
-        // the frame and the cell array is set to null and then the makeMenuReady()
-        // method is called
+        /*
+         * 
+         * when the exit button is pressed the running state if not already is set to
+         * false and the run button text is set to run. Then everything is removed from
+         * the frame and the cell array is set to null and then the makeMenuReady()
+         * method is called
+         */
         gameFrame.exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -231,8 +236,11 @@ public class GOL {
         });
     }
 
-    // checks if the inputed x, y or z values are between 0 to 8 and will return a
-    // boolean
+    /*
+     * 
+     * checks if the inputed x, y or z values are between 0 to 8 and will return a
+     * boolean
+     */
     public boolean checkIfValidXYZ(int inputedValue) {
         int[] validValues = { 0, 1, 2, 3, 4, 5, 6, 7, 8 };
         for (int validValue : validValues) {
@@ -290,8 +298,11 @@ public class GOL {
         }
     }
 
-    // method that will remove everything from the frame and recreate the menu with
-    // grid size set to 50
+    /*
+     * 
+     * method that will remove everything from the frame and recreate the menu with
+     * grid size set to 50
+     */
     public void resetMenu() {
         gameFrame.getContentPane().removeAll();
         gameFrame.repaint();
@@ -522,10 +533,6 @@ public class GOL {
         }
     }
 
-    // the code below references code from a blog posted on
-    // https://crunchify.com/how-to-read-json-object-from-file-in-java/
-    // (last accessed 15/03/2024)
-    // BEGIN referenced code
     /**
      * 
      * @throws FileNotFoundException
@@ -551,11 +558,13 @@ public class GOL {
             }
         }
     }
-    // END referenced code
 
-    // class that implements runnable with an overriden run method which will run
-    // the step() method followed by delay depending on the framerate in an infinite
-    // loop while the runningState boolean is true
+    /*
+     * class that implements runnable with an overriden run method which will run
+     * the step() method followed by delay depending on the framerate in an
+     * infinite
+     * loop while the runningState boolean is true
+     */
     public class loopedStepTask implements Runnable {
         @Override
         public void run() {
