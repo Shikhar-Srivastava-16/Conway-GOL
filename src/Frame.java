@@ -88,7 +88,7 @@ public class Frame extends JFrame {
         starter.setBounds(100, 555, 200, 70);
         add(starter);
 
-        JLabel gridLabel = new JLabel("Initial Size of Grid");
+        JLabel gridLabel = new JLabel("Grid Size:");
         gridLabel.setBounds(100, 500, 100, 50);
         add(gridLabel);
 
