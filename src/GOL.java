@@ -2,11 +2,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
 import java.nio.file.FileSystemException;
+
 import java.util.ArrayList;
+
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+import javax.json.JsonReader;
+import javax.json.JsonValue;
+import javax.json.stream.JsonParser;
+import javax.json.stream.JsonParserFactory;
 import javax.swing.JFileChooser;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -466,13 +478,20 @@ public class GOL {
     }
 
     // https://crunchify.com/how-to-read-json-object-from-file-in-java/
-    public void loadFromJson(File jsonSave) {
-        // System.out.println("loading from JSON");
-        // JSONParser parser = new JSONParser();
-        // Object obj = parser.parse(new FileReader(jsonSave.getAbsolutePath()));
-        // JSONObject jsonObject = (JSONObject) obj;
-        // JSONArray rowsList = jsonObject.get("liveRows");
-        // Iterator<JSONObject> iterator = rowsList.iterator();
+    public void loadFromJson(File jsonSave) throws FileNotFoundException {
+        System.out.println("loading from JSON");
+
+        JsonObject myObj = Json.createReader(new FileReader(jsonSave)).readObject();
+        JsonObject rowObject = myObj.getJsonObject("rows");
+
+        for (int i = 0; i < arrCells.length; i++) {
+            JsonArray arrThisRow = rowObject.getJsonArray(String.valueOf(i));
+            if(arrThisRow != null){
+                for (JsonValue jsonValue : arrThisRow) {
+                    arrCells[i][Integer.valueOf(jsonValue.toString())].setLive(true);
+                }
+            }
+        }
 
     }
 
